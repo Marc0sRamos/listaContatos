@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="#">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-orange.min.css" />
+	<link rel="stylesheet" href="index.css">
+	<link rel="stylesheet" href="/cadastro/cadastro.css">
+	<link rel="stylesheet" href="/home/home.css">
+	<script src="lib/jquery-3.6.1.min.js"></script>
+	<script src="/lib/jquery-maskedinput/src/jquery.maskedinput.js"></script>
+	<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<link href="lib/css/select2.min.css" rel="stylesheet" />
+	<script src="lib/js/select2.min.js"></script>
+	<script src="lib/js/pt-BR.js"></script>
+	<script src="lib/funcoes.js"></script>
+	<title>ICS Contatos</title>
+</head>
+
+<body>
+	<div class="demo-layout mdl-layout mdl-js-layout  mdl-layout--fixed-header ">
+		<header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-900">
+			<div class="mdl-layout__header-row">
+				<img id="img-ctt" src="../imagens/contacts_2022_48dp.png" alt="">
+				<span class="mdl-layout-title">Contatos</span>
+			</div>
+		</header>
+		<div class="demo-drawer mdl-layout__drawer  mdl-color-text--blue-grey-50">
+			<i class="demo-drawer-header"> </i>
+			<img src="../imagens/logo-ics.png" class="demo-avatar">
+			<div class="demo-avatar-dropdown">
+				<div class="mdl-layout-spacer"></div>
+			</div>
+			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-">
+				<a id="home" class="mdl-navigation__link navegacao" nome-rota="home" callback="listarContatos">
+					<i class="material-icons" role="presentation">home</i>Home
+				</a>
+				<a class="mdl-navigation__link navegacao" nome-rota="cadastro">
+					<i class="material-icons" role="presentation">add</i>Criar novo contato
+				</a>
+			</nav>
+		</div>
+		<div class="mdl-layout__content" id="main">
+			<main>
+
+				<div class="mdl-layout__content">
+					<main>
+						<img id="img-logo" src="../imagens/logo-ics.png" alt="">
+						<div class="content-list">
+							<div class="content-list-container">
+								<div class="titulo-li">
+									<p>Nome</p>
+									<p id="tituloMunicipios">Municipio</p>
+									<p>Telefone</p>
+								</div>
+								<ul id="listaContatos"></ul>
+
+							</div>
+						</div>
+					</main>
+				</div>
+			</main>
+
+			<div class="fab" ontouchstart="">
+				<a href="/cadastro/cadastro.html">
+					<button class="mdl-button mdl-button--fab mdl-button--fab" id="opcao1">
+						<i id="icone-add" class="material-icons">add</i>
+					</button>
+				</a>
+			</div>
+
+		</div>
+
+	</div>
+</body>
+<script src="lib/cidades.js"></script>
+<script src="cadastro/contatoModel.js"></script>
+<script src="cadastro/cadastro.js"></script>
+<script src="home/home.js"></script>
+<script src="index.js"></script>
+
+</html>

@@ -1,0 +1,463 @@
+html {
+  background-color: #ffffff;
+}
+
+.btn-form {
+  margin-bottom: 30px;
+}
+
+#estadosCadastro {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.remove {
+  left: 550px;
+}
+
+#municipiosCadastro {
+  margin-top: 20px;
+}
+
+.mdl-textfield .mdl-button {
+  background-color: #192C6F;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  min-width: 25px;
+  bottom: auto;
+  margin-left: 35px;
+  margin-top: -15px;
+  color: #FEF1EC;
+}
+
+.mdl-textfield .mdl-button:hover {
+  background-color: #F78B60;
+}
+
+.campo-nome {
+  width: 550px;
+  border-color: #F78B60;
+  /* display: inline-block; */
+  color: #192C6F;
+}
+
+.text-form {
+  width: 550px;
+}
+
+.demo-avatar {
+  width: 90%;
+  margin: 10px;
+}
+
+.mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
+  background-color: #192C6F;
+  color: #FFFFFF;
+  border-radius: 81px;
+  width: 67%;
+  margin: 20px auto;
+}
+
+.mdl-layout__drawer .mdl-navigation .mdl-navigation__link:hover {
+  background-color: #F78B60;
+  color: #FEF1EC;
+  transition: 0.5s;
+  opacity: 0.7;
+}
+
+::placeholder {
+  padding-left: 10px;
+  color: #192C6F;
+}
+
+
+
+::-webkit-scrollbar {
+  background-color: #192C6F;
+  width: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #FEF1EC;
+  border-radius: 5px;
+}
+
+.item {
+  height: 30px;
+  padding: 5px;
+  box-sizing: border-box;
+  transition: .3s;
+  cursor: pointer;
+}
+
+.item:hover {
+  background-color: #192C6F;
+  padding-left: 7px;
+  transition: .3s;
+  color: #FEF1EC;
+}
+
+#add {
+  background-color: #192C6F;
+  color: #FEF1EC;
+  margin-left: 30px;
+  position: absolute;
+  margin-top: 20px;
+  height: 35px;
+  min-width: 35px;
+  width: 35px;
+}
+
+
+.btn-pag {
+  display: flex;
+  height: 55px;
+  width: 300px;
+  justify-content: space-between;
+}
+
+#add:hover {
+  background-color: #F78B60;
+}
+
+
+main {
+  width: 900px;
+  margin: 0 auto;
+}
+
+#img-logo {
+  margin: 30px 200px;
+  width: 400px;
+  margin-top: 10px;
+}
+
+#wc {
+  margin-top: -5px;
+}
+
+.mdl-radio {
+  margin: 15px;
+  margin-left: 0px;
+}
+
+.mdl-radio__button {
+  margin-left: 0px;
+  cursor: pointer;
+}
+
+.mdl-radio__label {
+  color: #192C6F;
+}
+
+.mdl-layout__header .mdl-layout__drawer-button {
+  color: #192c6f;
+}
+
+.mdl-layout__drawer {
+  background-color: #FFFFFF;
+}
+
+.input_novo {
+  margin-top: 15px;
+}
+
+#municipio-ctt {
+  padding-top: 0px;
+}
+
+#call {
+  float: left;
+  padding-top: 20px;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 0.8em;
+  color: #192C6F;
+}
+
+
+.select2-results {
+  margin: 0 4px 4px 0;
+  max-height: 240px;
+  padding: 0 0 0 4px;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.select2-results__option {
+  /* padding: 1px !important; */
+  line-height: 15px;
+  padding: 5px 6px;
+  margin: 0px;
+}
+
+
+.select2-container--default .select2-results>.select2-results__options {
+  max-height: 150px !important;
+}
+
+
+
+.campo-email {
+  padding-bottom: 40px;
+}
+
+.icone {
+  float: left;
+  padding-top: 20px;
+  margin-right: 5px;
+  color: #192C6F;
+}
+
+
+.mdl-color-text--blue-grey-400 :hover {
+  color: #FEF1EC;
+}
+
+
+.mdl-layout__header-row>* {
+  color: #192C6F;
+  font-weight: 500;
+}
+
+
+#desc {
+  margin-top: 20px;
+}
+
+#desc-ctt {
+  margin-top: 20px;
+}
+
+#btn-excluir {
+  background-color: #F78B60;
+  color: #FEF1EC;
+}
+
+
+#btn-salvar {
+  background-color: #192C6F;
+  color: #FEF1EC;
+}
+
+.mfab {
+  display: none;
+  background-color: #192C6F;
+}
+
+#opcao10 {
+  display: none;
+}
+
+
+
+/* ------------------------------------------------------------------------------------------------------ */
+
+@media screen and (max-width: 600px) {
+
+  main {
+    width: 80%;
+  }
+
+  #img-ctt {
+    display: none;
+  }
+
+  #img-logo {
+    width: 80%;
+    margin: 20px 13%;
+  }
+
+  .campo-nome {
+    width: 85%;
+  }
+
+  .mdl-textfield {
+    display: block;
+
+  }
+
+  .input_novo {
+    margin-left: 30px;
+  }
+
+  .btn-pag {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    width: 100%;
+  }
+
+  .mdl-mini-footer {
+    display: flex;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+  .mdl-textfield__label {
+    margin-left: 30px;
+    width: 85%;
+  }
+
+  #municipio-ctt {
+    width: 5%;
+  }
+
+  .select2-container {
+    width: 85% !important;
+  }
+
+  .remove {
+    margin-left: -545px !important;
+    margin-top: -25px !important;
+  }
+
+  .item:hover {
+    background-color: #192C6F;
+    padding-left: 7px;
+    transition: .3s;
+    color: #FEF1EC;
+    border: 1px #FEF1EC solid;
+  }
+
+  #add {
+    background-color: #192C6F;
+    margin-left: 0;
+    height: 30px;
+    width: 30px;
+    min-width: 30px;
+
+  }
+
+  .mdl-mini-footer {
+    color: #FEF1EC;
+  }
+
+
+  .mdl-layout__header .mdl-layout__drawer-button {
+    display: none;
+  }
+
+  #img-ctt {
+    display: none;
+  }
+
+  .mdl-layout__header-row {
+    padding: 0 30px;
+  }
+
+  .mdl-layout__header-row>* {
+    color: #192C6F;
+    font-weight: 600;
+  }
+
+  .mdl-textfield .mdl-js-textfield .text-form {
+    margin-top: 20px;
+  }
+
+  #add {
+    margin-top: 0px;
+  }
+
+  #add-mobile {
+    display: inline;
+    position: absolute;
+    bottom: 40px;
+    right: 10px;
+    background-color: #192C6F;
+  }
+
+  .fab1 {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+  }
+
+  .fab1 button {
+    cursor: pointer;
+    border-radius: 30px;
+
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    transition: .2s ease-out;
+  }
+
+  .fab1 button.mfab {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 20;
+    color: #FEF1EC;
+  }
+
+  .fab1 button.mfab:before {
+    content: '';
+  }
+
+
+  .fab1 button.mfab:active,
+  .fab1 button.mfab:focus,
+  .fab1 button.mfab:hover {
+    outline: none;
+    background-color: #192C6F;
+    box-shadow: 0 3px 8px #F78B60;
+    color: #FEF1EC;
+  }
+
+  .fab1 button.mfab:active:before,
+  .fab1 button.mfab:focus:before,
+  .fab1 buttpm.mfab:hover:before {
+    content: '↑';
+  }
+
+  .fab1 button.mfab:active+ul,
+  .fab1 button.mfab:focus+ul,
+  .fab1 button.mfab:hover+ul {
+    bottom: 70px;
+  }
+
+  .fab1 button.mfab:active+ul li,
+  .fab1 button.mfab:focus+ul li,
+  .fab1 button.mfab:hover+ul li {
+    margin-bottom: 5px;
+    opacity: 1;
+  }
+
+  .fab button.mfab:active+ul li:hover label,
+  .fab1 button.mfab:focus+ul li:hover label {
+    opacity: 1;
+  }
+
+  .mfab {
+    display: inline;
+  }
+
+  #opcao10 {
+    display: inline;
+    background-color: #F78B60;
+    color: #FEF1EC;
+  }
+
+  #label_home {
+    display: inline;
+  }
+
+  ul {
+    display: inline;
+  }
+
+
+}

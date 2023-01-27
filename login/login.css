@@ -1,0 +1,99 @@
+.logo-login {
+    width: 400px;
+    display: flex;
+    align-items: center;
+    margin: auto;
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+#texto-login {
+  margin: 30px 0;
+  text-align: center;
+  font-size: 1.4em;
+  font-weight: 600;
+  color: #192C6F;
+}
+
+.form-login {
+  width: 400px;
+  display: flex;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.mdl-textfield {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+#rec-senha {
+  display: block;
+  color: #192C6F;
+  text-decoration: none;
+}
+
+#btn-acessar {
+  margin-top: 50px;
+  width: 410px;
+  height: 50px;
+  background-color: #F78B60;
+  color: #FEF1EC;
+}
+
+.material-icons {
+  color: #192C6F;
+  position: relative;
+  top: 9px;
+}
+
+.logo-2 {
+  display: none;
+}
+
+@media screen and (max-width: 839px) {
+
+  /* main {
+    width: 80%;
+  } */
+
+  .form-login {
+    width: 100%;
+  }
+
+  #btn-acessar {
+    width: 100%;
+  }
+
+  #imagem-login {
+    display: none;
+  }
+
+  .logo-login {
+    width: 80%;
+    margin: 20px 13%;
+  }
+
+  /* .logo-2 {
+    display: inline;
+    width: 80%;
+  } */
+
+  .btn-loguin {
+    width: 80%;
+    margin: 0 auto;
+  }
+/*
+  .texto-loguin {
+    margin: 50px 0;
+  }
+
+  .mdl-textfield {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 5px;
+    width: 80%;
+  }
+   */
+}
