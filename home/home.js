@@ -65,10 +65,9 @@ class Home {
         contatoModel.listar()
             .then((contatos) => { return this.povoarGrid(contatos); })
             .then(() => { console.log('grid carregada com sucesso.') });
-    }  
+    }      
 }
 
-$(document).on('click', '.liHome', function() {
-    console.log()
-})
+
+
 
