@@ -1,17 +1,18 @@
 var db;
-var request = window.indexedDB.open("DBcontato", 1);
+var request = window.indexedDB.open("DBcontatos", 1);
 
-request.onerror = function(event) {
+request.onerror = function (event) {
     console.log("Não foi possivel conectar na base de dados!");
 };
 
 request.onupgradeneeded = function (event) {
     db = event.target.result;
-    var contatoObjectStore = db.createObjectStore("contato", { autoIncrement : true });
-    contatoObjectStore.createIndex('email', 'email', {unique: true});
+    var contatoObjectStore = db.createObjectStore("contato", { keyPath: "codigoContato" });
+    contatoObjectStore.createIndex('email', 'email', { unique: true });
+    contatoObjectStore.createIndex('codigoContato', 'codigoContato', { unique: true });
 }
 
-request.onsuccess = function(event) {
+request.onsuccess = function (event) {
     db = event.target.result;
 };
 
@@ -28,60 +29,45 @@ class ContatoModel {
         let objectStore = transaction.objectStore('contato');
         objectStore.add(contato);
 
-        transaction.onerror = function(event) {
-            
-            console.log(event);
-            console.log(event.explicitOriginalTarget.error.message);
-            console.log(event.explicitOriginalTarget.error.name);
-            console.log(event.explicitOriginalTarget.source.indexNames[0]);
 
-            if (event.explicitOriginalTarget.source.indexNames[0] === 'email') {
+        if (transaction.onerror) {
+            var erro = transaction.onerror
+            console.log(erro);
+            console.log(erro.explicitOriginalTarget.error.message);
+            console.log(erro.explicitOriginalTarget.error.name);
+            console.log(erro.explicitOriginalTarget.source.indexNames[0]);
+            if (erro.explicitOriginalTarget.source.indexNames[0] === 'email') {
                 emailUtilizado()
             };
-        };
-
-    }
-    
-    remover(contato) {
-        let transaction = db.transaction(["contato"], "readwrite");
-        let objectStore = transaction.objectStore("contato");
-        objectStore.delete(contato);
-
-        transaction.onsuccess = function(event) {
-            console.log('contato exluido')
-        };
-
+        }
+        // exibirMensagemContatoSalvo('Contato salvo com sucesso!')
+        // limpar()   
     }
 
-    listar_old() {
+    excluir(codigo) {
+        let transaction = db.transaction(['contato'], 'readwrite')
+            .objectStore('contato')
+            .delete(codigo);
 
-        let transaction = db.transaction(['contato'], 'readonly');
-        let objectStore = transaction.objectStore('contato');
-        var arrayContatos = []
+        transaction.onsuccess = () => {
+            console.log('Contato excluido, com sucesso!');
+            carregarPagina({ "rota": "home", "callback": "listarContatos" });
+        }
 
-        objectStore.openCursor().onsuccess = function(event) {
-            var cursor = event.target.result;
-            if(cursor) { 
-                arrayContatos.push(cursor.value)
-                cursor.continue();
-                // console.log(arrayContatos)
-            } else {
-                // console.log('erro');
-                
-            }
-        };
-        return arrayContatos
+        request.onerror = (err) => {
+            console.log(err)
+        }
     }
+
 
     listar() {
-
-        return new Promise ((resolve, reject) => {
+        return new Promise((resolve, reject) => {
 
             let transaction = db.transaction(['contato'], 'readonly');
             let objectStore = transaction.objectStore('contato');
             var arrayContatos = []
 
-            objectStore.openCursor().onsuccess = function(event) {
+            objectStore.openCursor().onsuccess = function (event) {
                 var cursor = event.target.result;
                 if (cursor) {
                     arrayContatos.push(cursor.value)
@@ -95,7 +81,7 @@ class ContatoModel {
 
     validarObjetoContato(contato) {
         if (typeof contato !== 'object') {
-            return false;        
+            return false;
         }
 
         var atributos = ['nome', 'telefone', 'email', 'municipio', 'sexo'];
@@ -106,4 +92,35 @@ class ContatoModel {
     }
 
 }
+
+
+function getContato(codigo) {
+
+    return new Promise((resolve, reject) => {
+
+        let objectStore = db.transaction(['contato'], 'readonly')
+            .objectStore('contato');
+
+        let index = objectStore.index('codigoContato');
+        let keyRangeValue = IDBKeyRange.only(codigo);
+        let request = index.get(keyRangeValue);
+        let teste;
+
+        request.onsuccess = function () {
+            if (request.result) {
+                teste = request.result
+                console.log(request.result)
+                resolve(teste)
+            }
+            else {
+                console.log('index não encontrado');
+            }
+        }
+
+    })
+}
+
+
+
+
 

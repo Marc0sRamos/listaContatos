@@ -61,6 +61,10 @@ main {
   color: #FEF1EC;
 }
 
+p {
+  margin: 0px;
+  padding: 0px 10px;
+}
 
 .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
   background-color: #192C6F;
@@ -112,6 +116,7 @@ main {
   font-size: 1.1em;
   font-weight: 800;
   color: #F78B60;
+  padding: 0px 10px;
 }
 
 #listaContatos {
@@ -121,7 +126,6 @@ main {
 
 .content-list {
   margin-top: 20px;
-  padding: 20px;
   background-color: #fef1ec73;
   border-radius: 15px;
 }
@@ -150,14 +154,12 @@ li p {
 }
 
 .liHome:hover{
-  /* background-color: #f78b6042; */
+  background-color: #f78b601f;
   transition: .3s;
-  /* color: #F78B60; */
   cursor: pointer;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 10px;
-  border-radius: 15px;
+  /* margin-left: 2px;
+  margin-right: 2px; */
+  border-radius: 5px;
 }
 
 .mdl-layout__header .mdl-color--grey-100 .mdl-color-text--grey-900 {
@@ -403,6 +405,9 @@ main {
   justify-content: space-between;
   margin-top: 10px;
   margin-bottom: 10px;
+  height: 30px;
+  flex-direction: row;
+  align-items: center;
 }
 
 .titulo-li {
@@ -438,13 +443,10 @@ main {
     display: none;
   }
 
-.liHome {
-  height: 60px
-}
 
 .content-list {
   margin-top: 20px;
-  padding: 20px;
+  padding: 20px 0;
   background-color: #fef1ec73;
   border-radius: 15px;
 }

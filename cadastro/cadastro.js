@@ -1,22 +1,10 @@
 $("body #main").on("click", "#add", function (e) {
-    let idTelefone = (new String(Math.random())).split('.')[1];
     e.preventDefault();
-
-    let inputTelefone = document.createElement('input');
-    inputTelefone.setAttribute('class', 'campo-nome mdl-textfield__input telefone');
-    inputTelefone.setAttribute('id', idTelefone)
-    inputTelefone.classList.add('input_novo');
-    document.getElementById('telefone-ctt').appendChild(inputTelefone);
-
-    let btnremover = document.createElement('button');
-    btnremover.setAttribute('class', 'mdl-button mdl-button--fab mdl-button--mini-fab btn-remover remove');
-    btnremover.innerHTML = '<i class="material-icons">remove</i>'
-    btnremover.setAttribute('id-telefone', idTelefone);
-    document.getElementById('telefone-ctt').appendChild(btnremover);
-    $('.telefone').mask('(99) 99999-999?9');
+    ButtonRemoverInput()
 });
 
-$('body #main').on("click", ".remove", function(){    
+$('body #main').on("click", ".remove", function (e) {
+    e.preventDefault();
     document.getElementById($(this).attr('id-telefone')).remove();
     $(this).remove()
 });
@@ -37,26 +25,39 @@ class Contato {
 }
 
 class Formulario {
-    
+
     povoarSelectMunicipio() {
         var select = document.getElementById('municipiosCadastro')
 
-        municipiosBaseRemota.forEach(function (municipio, indice) {
-
+        municipiosBaseRemota.forEach(function (municipio) {
             let option = document.createElement('option');
             option.setAttribute('value', municipio.codigoIbge);
             option.setAttribute('class', 'selectOption')
-            option.innerHTML = "(" + municipio.uf + ") " + municipio.nomeCidade
+            option.innerHTML = municipio.uf + " - " + municipio.nomeCidade
             select.appendChild(option);
-        })
-
-            $('#municipiosCadastro').select2({
-                placeholder: "Selecione o municipio",
-                allowClear: true, 
-                minimumInputLength: 3,
-                language: "pt-BR"
         });
-       
+
+        $('#municipiosCadastro').select2({
+            placeholder: "Selecione o municipio",
+            allowClear: true,
+            minimumInputLength: 3,
+            language: "pt-BR"
+        });
+
+    };
+
+    hidratar() {
+        let nome = document.getElementById('nome-ctt').value;
+        let sexo = document.querySelector('input[name="sexo"]:checked').value;
+        let telefone = [];
+
+        $.each(document.getElementsByClassName('telefone'), function (indice, input) {
+            telefone[indice] = input.value;
+        });
+        let email = document.getElementById('email-ctt').value;
+        let municipio = document.getElementById('municipiosCadastro').value;
+        let observacao = document.getElementById('obs-ctt').value;
+        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao);
     };
 
     filtrarNome(nome) {
@@ -69,35 +70,6 @@ class Formulario {
 
     filtrarObservacao(observacao) {
         return observacao.trim();
-    };
-
-    salvar() {
-        // hidrata o objeto contato
-        this.hidratar();
-        // filtra os atributos do objeto contato
-        this.filtrar();
-        // valida os atributos do objeto contato
-        this.validar();
-        // salva no banco
-        let modelContato = new ContatoModel;
-        modelContato.adicionar(this.contato);
-        this.limpar();
-    };
-
-    hidratar() {
-
-        let nome = document.getElementById('nome-ctt').value;
-        let sexo = document.querySelector('input[name="sexo"]:checked').value;
-        let telefone = [];
-
-        $.each(document.getElementsByClassName('telefone'), function (indice, input) {
-            telefone[indice] = input.value;
-        });
-
-        let email = document.getElementById('email-ctt').value;
-        let municipio = document.getElementById('municipiosCadastro').value;
-        let observacao = document.getElementById('obs-ctt').value;
-        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao);
     };
 
     filtrar() {
@@ -141,129 +113,171 @@ class Formulario {
         }
     };
 
-    limpar(){
-    $(":input").val(""); 
+    salvar() {
+        // hidrata o objeto contato
+        this.hidratar();
+        // filtra os atributos do objeto contato
+        this.filtrar();
+        // valida os atributos do objeto contato
+        this.validar();
+        // salva no banco
+        let modelContato = new ContatoModel;
+        modelContato.adicionar(this.contato);
     };
 
     excluir() {
-      let contatoModel = new ContatoModel;
-      contatoModel.remover(this.contato)     
+        let contatoModel = new ContatoModel;
+        contatoModel.excluir(idTelefoneEditavel)
+    }
+
+    preencherFormulario(idContato) {
+        let contatoEdit = {}
+
+        contatoEdit = getContato(idContato).then((contato) => {
+
+            document.getElementById('id-contato').value = contato.codigoContato;
+            document.getElementById('nome-ctt').value = contato.nome;
+            document.querySelector('input[name="sexo"]:checked').value = contato.sexo;
+
+            hidratarTelefone(0, contato)
+    
+            if (contato.telefone.length > 1) {
+                for (var indice = 1; indice < contato.telefone.length; indice ++) {
+                    criarInput()
+                    hidratarTelefone(indice, contato)
+                }
+            }
+
+            $("#municipiosCadastro").val(contato.municipio).trigger('change');
+            document.getElementById('email-ctt').value = contato.email
+            document.getElementById('obs-ctt').value = contato.observacao
+
+        })
     }
 }
 
-$(document).on('click', '#btn-salvar', function(e) {
+
+$(document).on('click', '#btn-salvar', function (e) {
     e.preventDefault();
     var formulario = new Formulario;
     formulario.salvar();
 });
 
 
-$(document).on('click', '#btn-excluir', function(e) {
+$(document).on('click', '#btn-excluir', function (e) {
     e.preventDefault();
-    var formulario = new Formulario;
-    formulario.excluir();
+    resultado = window.confirm('Deseja realmente excluir o contato?');
+    if (resultado == true) {
+        let contatomodel = new ContatoModel;
+        contatomodel.excluir(idContato)
+    }
 });
 
 
 
 
-// function gerarContatos() {
-// let nome = gerarNomeAleatorio()
-
-// let contatoGerado = new Contato(
-//     nome, 'M', gerarNumero(), gerarEmail(nome), getMunicipios(), gerarObservação()
-// );
-
-// console.log(nome)
-// let modelContato = new ContatoModel;
-//     modelContato.adicionar(contatoGerado);
-
-// }
-
-// function gerarNomeAleatorio() {
-
-//     let quantidadeDeSilabas=getRandomIntInclusive(2,3);
-//     let nome="";
-  
-//     for (contadorSilaba=1;contadorSilaba<=quantidadeDeSilabas;contadorSilaba++){
-  
-//       nome=nome +  getConsoanteAleatoria() + getVogalAleatoria() ;
-  
-//     }
-//     // console.log(nome)  
-//     return nome;
-// };
-  
-// function getRandomIntInclusive(min, max) {
-//     min = Math.ceil(min);
-//     max = Math.floor(max);
-//     return Math.floor(Math.random() * (max - min + 1)) + min;
-// };
-  
-// function getVogalAleatoria(){
-  
-//     let listaVogais="AEOIU";
-//     let numeroAleatorio=getRandomIntInclusive(1, 5);
-  
-//     return listaVogais.substring(numeroAleatorio-1,numeroAleatorio);
-  
-// };
-  
-// function getConsoanteAleatoria(){
-  
-//     let listaConsoantes="BCDFGHJKLMNPQRSTWVXYZ";
-//     let numeroAleatorio=getRandomIntInclusive(1, 21);
-  
-//     return listaConsoantes.substring(numeroAleatorio-1,numeroAleatorio);
-  
-// };
-
-// function gerarNumero() {
-//     let numero = [0,1,2,3,4,5,6,7,8,9]
-//     let telefone = ''
-//     for (var i = 0; i < 11; i++) {
-//          telefone += numero[Math.floor(Math.random() * 9)] ;
-//     }
-
-//     return telefone
-// };
-
-// function gerarEmail(nome) {
-//     let dominios = ['@gmail.com', '@outlook.com', '@icsgo.com.br']
-//     let email = nome + Math.random().toString()  + dominios[Math.floor(Math.random() * dominios.length)];
-
-//     return email
-// };
 
 
-// function getIbge () {
-//     let codigosIbge = []
-
-//     municipiosBaseRemota.forEach(function(municipio, indice) {
-
-//     codigosIbge[indice] = municipio.codigoIbge
-
-//     })
-
-//     return  codigosIbge
-// }
-
-// function getMunicipios() {
-//     var codigoIbge = getIbge()
-//     let codigo = codigoIbge[Math.floor(Math.random() * codigoIbge.length)]
-//     return codigo
-// };
 
 
-// function gerarObservação() {
-//     let observacao = gerarNomeAleatorio().toLowerCase()
-
-//     return observacao
-// }
 
 
-// function forContatos() {
-//     for (let i = 0; i < 9998; i++) {
-//         gerarContatos()
-//     }
-// }
+function gerarContatos() {
+    let nome = gerarNomeAleatorio()
+
+    let contatoGerado = new Contato(
+        nome, 'M', gerarNumero(), gerarEmail(nome), getMunicipios(), gerarObservação()
+    );
+
+    console.log(nome)
+    let modelContato = new ContatoModel;
+    modelContato.adicionar(contatoGerado);
+
+}
+
+function gerarNomeAleatorio() {
+
+    let quantidadeDeSilabas = getRandomIntInclusive(2, 3);
+    let nome = "";
+
+    for (contadorSilaba = 1; contadorSilaba <= quantidadeDeSilabas; contadorSilaba++) {
+
+        nome = nome + getConsoanteAleatoria() + getVogalAleatoria();
+
+    }
+    // console.log(nome)  
+    return nome;
+};
+
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+function getVogalAleatoria() {
+
+    let listaVogais = "AEOIU";
+    let numeroAleatorio = getRandomIntInclusive(1, 5);
+
+    return listaVogais.substring(numeroAleatorio - 1, numeroAleatorio);
+
+};
+
+function getConsoanteAleatoria() {
+
+    let listaConsoantes = "BCDFGHJKLMNPQRSTWVXYZ";
+    let numeroAleatorio = getRandomIntInclusive(1, 21);
+
+    return listaConsoantes.substring(numeroAleatorio - 1, numeroAleatorio);
+
+};
+
+function gerarNumero() {
+    let numero = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    let telefone = ''
+    for (var i = 0; i < 11; i++) {
+        telefone += numero[Math.floor(Math.random() * 9)];
+    }
+
+    return telefone
+};
+
+function gerarEmail(nome) {
+    let dominios = ['@gmail.com', '@outlook.com', '@icsgo.com.br']
+    let email = nome + Math.random().toString() + dominios[Math.floor(Math.random() * dominios.length)];
+
+    return email
+};
+
+
+function getIbge() {
+    let codigosIbge = []
+
+    municipiosBaseRemota.forEach(function (municipio, indice) {
+
+        codigosIbge[indice] = municipio.codigoIbge
+
+    })
+
+    return codigosIbge
+}
+
+function getMunicipios() {
+    var codigoIbge = getIbge()
+    let codigo = codigoIbge[Math.floor(Math.random() * codigoIbge.length)]
+    return codigo
+};
+
+
+function gerarObservação() {
+    let observacao = gerarNomeAleatorio().toLowerCase()
+
+    return observacao
+}
+
+function forContatos() {
+    for (let i = 0; i < 20; i++) {
+        gerarContatos()
+    }
+}

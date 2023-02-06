@@ -1,8 +1,8 @@
 setTimeout(() => {
-	$(document).ready(function(){
+	$(document).ready(function () {
 		let home = new Home()
-	
-		home.listarContatos()			
+
+		home.listarContatos()
 	})
 }, 500);
 
@@ -27,35 +27,40 @@ const usuario = {
 };
 
 
-	$("body").on('click', '.navegacao', function () {
-		let nomeRota = $(this).attr('nome-rota');
-		let callback = $(this).attr('callback');
-		// console.log(callback)
-		carregarPagina(nomeRota, callback);
-	});
+$("body").on('click', '.navegacao', function () {
+	let argumentos = {
+		'rota': $(this).attr('nome-rota'),
+		'callback': $(this).attr('callback')
+	}
+	carregarPagina(argumentos);
+});
 
 
-function carregarPagina(rota, callback)
-{
-	$("#main").load(rotas[rota][0], function () {
+function carregarPagina(argumentos) {
+	$("#main").load(rotas[argumentos.rota][0], function () {
 
 		$('.telefone').mask('(99) 99999-999?9');
-		
-		if (rota === 'home') {
+
+		if (argumentos.rota === 'home') {
 			let home = new Home();
 
-			if (typeof home[callback] === 'function') {
+			if (typeof home[argumentos.callback] === 'function') {
 				// home[callback]();
-				home.listarContatos()
+				home.listarContatos();
+			}
+		};
+
+		if (argumentos.rota === 'cadastro') {
+			let formulario = new Formulario();
+			formulario.povoarSelectMunicipio();
+
+			if (typeof formulario[argumentos.callback] === 'function') {
+				formulario.preencherFormulario(argumentos.id);
+				// idContato = argumentos.id
 			}
 		}
-
-		if (rota === 'cadastro') {
-				let f = new Formulario();
-				f.povoarSelectMunicipio();
-		}
 	});
-}	
+}
 
 
 

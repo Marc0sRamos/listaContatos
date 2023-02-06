@@ -71,7 +71,15 @@ html {
   color: #192C6F;
 }
 
+#btn-nao{
+  background-color: #192C6F;
+  color: #FEF1EC;
+}
 
+#btn-avancar{
+  background-color: #F78B60;
+  color: #FEF1EC;
+}
 
 ::-webkit-scrollbar {
   background-color: #192C6F;

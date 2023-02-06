@@ -1,11 +1,13 @@
 $(document).ready(function () {
+    $(document).on('click', '.liHome', function() {
+        let idContato = $(this).attr('id-contato');
+        carregarPagina({"rota": "cadastro", "callback": "preencherFormulario", "id": idContato})
+    })
 });
 
-let contatoReplace;
 let municipios = {}
 let arrCores = ['#008000', '#0000FF', '#F4A460', '#4B0082', '#FF4500', '#4682B4', '#48D1CC', '#8B008B', '#FF4500', '#FFD700', '#B22222'];
 
-let cor = arrCores[Math.floor(Math.random() * arrCores.length)];
 class Home {
 
     povoarGrid(contatos) {
@@ -14,7 +16,8 @@ class Home {
             contatos.forEach(function (contato, indice) {
 
                 var li = document.createElement('li');
-                li.setAttribute('class', 'liHome')
+                li.setAttribute('class', 'liHome');
+                li.setAttribute('id-contato', contato.codigoContato);
 
                 var p1 = document.createElement('p');
                 p1.setAttribute('class', 'inicial-nome');
@@ -33,7 +36,7 @@ class Home {
                 var p4 = document.createElement('p');
                 p4.setAttribute('class', 'mnc-telefone');
 
-                var numero = contato.telefone.toString()
+                var numero = contato.telefone[0].toString()                      
 
                 if (numero.length == 11) {
                     var ddd = numero.slice(0,2);
@@ -65,9 +68,6 @@ class Home {
         contatoModel.listar()
             .then((contatos) => { return this.povoarGrid(contatos); })
             .then(() => { console.log('grid carregada com sucesso.') });
-    }      
+    }  
 }
-
-
-
 
