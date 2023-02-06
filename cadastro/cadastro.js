@@ -37,12 +37,7 @@ class Contato {
 }
 
 class Formulario {
-
-    povoarSelectEstado() {
-        var select = document.getElementById('estadosCadastro')
-    }
-
-
+    
     povoarSelectMunicipio() {
         var select = document.getElementById('municipiosCadastro')
 
@@ -156,16 +151,6 @@ class Formulario {
     }
 }
 
-// $(document).on('click', '#municipiosCadastro', function () {
-//     let f = new Formulario();
-//     f.povoarSelectMunicipio();
-// });
-
-// $(document).ready(function () {
-//     let f = new Formulario();
-//     f.povoarSelectMunicipio();
-// });
-
 $(document).on('click', '#btn-salvar', function(e) {
     e.preventDefault();
     var formulario = new Formulario;
@@ -178,6 +163,8 @@ $(document).on('click', '#btn-excluir', function(e) {
     var formulario = new Formulario;
     formulario.excluir();
 });
+
+
 
 
 // function gerarContatos() {
