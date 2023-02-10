@@ -1,23 +1,11 @@
-setTimeout(() => {
-	$(document).ready(function () {
-		let home = new Home()
-
-		home.listarContatos()
-	})
-}, 500);
-
-
-
-
 const rotas = {
 	"home": [
-		"home/home.html",
+		"/cadastros/home/home.html",
 		// "home/home.css",
-
 	],
 
 	"cadastro": [
-		"cadastro/cadastro.html",
+		"/cadastros/cadastro/cadastro.html",
 	]
 };
 
@@ -45,7 +33,6 @@ function carregarPagina(argumentos) {
 			let home = new Home();
 
 			if (typeof home[argumentos.callback] === 'function') {
-				// home[callback]();
 				home.listarContatos();
 			}
 		};
@@ -56,25 +43,7 @@ function carregarPagina(argumentos) {
 
 			if (typeof formulario[argumentos.callback] === 'function') {
 				formulario.preencherFormulario(argumentos.id);
-				// idContato = argumentos.id
 			}
-
-			"use strict";
-
-			var snackbarContainer = document.querySelector('#demo-toast-example');
-			// var showToastButton = document.querySelector('#demo-show-toast');
-
-			$("#main").on("click", "#demo-show-toast", function() {
-				alert ('adf');
-				var data = { message: 'Example Message # ' };
-				snackbarContainer.MaterialSnackbar.showSnackbar(data);
-			});
-
-			// showToastButton.addEventListener('click', function () {
-			// 	'use strict';
-			// 	var data = { message: 'Example Message # ' };
-			// 	snackbarContainer.MaterialSnackbar.showSnackbar(data);
-			// });
 		}
 	});
 }

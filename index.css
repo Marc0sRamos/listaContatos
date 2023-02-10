@@ -1,0 +1,13 @@
+#imagem-logo{
+    padding-top: 80px;
+    display: flex;
+    justify-content: center;
+}
+
+#homeMain {
+    display: none;
+}
+
+#cadastroMain {
+    display: none;
+}

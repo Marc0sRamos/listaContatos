@@ -3,6 +3,7 @@ $("body #main").on("click", "#add", function (e) {
     ButtonRemoverInput()
 });
 
+
 $('body #main').on("click", ".remove", function (e) {
     e.preventDefault();
     document.getElementById($(this).attr('id-telefone')).remove();
@@ -299,6 +300,10 @@ function forContatos() {
         gerarContatos()
     }
 }
+
+
+let formulario = new Formulario();
+	formulario.povoarSelectMunicipio();
 
 // (function () {
 //     'use strict';
