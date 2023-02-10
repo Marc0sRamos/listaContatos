@@ -58,6 +58,23 @@ function carregarPagina(argumentos) {
 				formulario.preencherFormulario(argumentos.id);
 				// idContato = argumentos.id
 			}
+
+			"use strict";
+
+			var snackbarContainer = document.querySelector('#demo-toast-example');
+			// var showToastButton = document.querySelector('#demo-show-toast');
+
+			$("#main").on("click", "#demo-show-toast", function() {
+				alert ('adf');
+				var data = { message: 'Example Message # ' };
+				snackbarContainer.MaterialSnackbar.showSnackbar(data);
+			});
+
+			// showToastButton.addEventListener('click', function () {
+			// 	'use strict';
+			// 	var data = { message: 'Example Message # ' };
+			// 	snackbarContainer.MaterialSnackbar.showSnackbar(data);
+			// });
 		}
 	});
 }

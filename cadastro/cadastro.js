@@ -11,16 +11,16 @@ $('body #main').on("click", ".remove", function (e) {
 
 class Contato {
 
-    constructor(nome, sexo, telefone, email, municipio, observacao) {
+    constructor(nome, sexo, telefone, email, municipio, observacao, codigoContato) {
         this.nome = nome;
         this.sexo = sexo;
         this.telefone = telefone;
         this.email = email;
         this.municipio = municipio;
         this.observacao = observacao;
-        this.codigoContato = uuidv4();
+        this.codigoContato = codigoContato;
         this.idUsuarioInsert = usuario.codigo;
-        this.dataInsert = Date.now();
+        this.dataInsert = Date.now()
     }
 }
 
@@ -57,7 +57,13 @@ class Formulario {
         let email = document.getElementById('email-ctt').value;
         let municipio = document.getElementById('municipiosCadastro').value;
         let observacao = document.getElementById('obs-ctt').value;
-        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao);
+        let codigoContato = document.getElementById('id-contato').value;
+
+        if (codigoContato.length !== 36) {
+            codigoContato = uuidv4()
+        }
+
+        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato);
     };
 
     filtrarNome(nome) {
@@ -121,14 +127,26 @@ class Formulario {
         // valida os atributos do objeto contato
         this.validar();
         // salva no banco
-        let modelContato = new ContatoModel;
-        modelContato.adicionar(this.contato);
-    };
+        var idContato = document.getElementById('id-contato').value;
 
-    excluir() {
-        let contatoModel = new ContatoModel;
-        contatoModel.excluir(idTelefoneEditavel)
-    }
+        if (idContato.length !== 36) {
+            let modelContato = new ContatoModel;
+            modelContato.adicionar(this.contato)
+                .then((mensagem) => {
+                    exibirMensagemSucesso(mensagem);
+                    limpar()
+                })
+        } else {
+            let modelContato = new ContatoModel;
+            modelContato.atualizar(this.contato)
+                .then((mensagem) => {
+                    exibirMensagemSucesso(mensagem);
+                })
+                .catch((erro) => {
+                    console.log(erro);
+                })
+        }
+    };
 
     preencherFormulario(idContato) {
         let contatoEdit = {}
@@ -140,18 +158,17 @@ class Formulario {
             document.querySelector('input[name="sexo"]:checked').value = contato.sexo;
 
             hidratarTelefone(0, contato)
-    
+
             if (contato.telefone.length > 1) {
-                for (var indice = 1; indice < contato.telefone.length; indice ++) {
-                    criarInput()
+                for (var indice = 1; indice < contato.telefone.length; indice++) {
+                    ButtonRemoverInput()
                     hidratarTelefone(indice, contato)
                 }
             }
 
             $("#municipiosCadastro").val(contato.municipio).trigger('change');
-            document.getElementById('email-ctt').value = contato.email
-            document.getElementById('obs-ctt').value = contato.observacao
-
+            document.getElementById('email-ctt').value = contato.email;
+            document.getElementById('obs-ctt').value = contato.observacao;
         })
     }
 }
@@ -168,8 +185,9 @@ $(document).on('click', '#btn-excluir', function (e) {
     e.preventDefault();
     resultado = window.confirm('Deseja realmente excluir o contato?');
     if (resultado == true) {
+        var idContato = document.getElementById('id-contato').value
         let contatomodel = new ContatoModel;
-        contatomodel.excluir(idContato)
+        contatomodel.excluir(idContato);
     }
 });
 
@@ -281,3 +299,19 @@ function forContatos() {
         gerarContatos()
     }
 }
+
+// (function () {
+//     'use strict';
+//     window['counter'] = 0;
+
+// $(document).ready(function() {
+//     var snackbarContainer = document.querySelector('#demo-toast-example');
+//     var showToastButton = document.querySelector('#demo-show-toast');
+//     showToastButton.addEventListener('click', function () {
+//         'use strict';
+//         var data = { message: 'Example Message # ' + ++counter };
+//         snackbarContainer.MaterialSnackbar.showSnackbar(data);
+//     });
+// });
+
+// }());

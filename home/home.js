@@ -14,7 +14,6 @@ class Home {
         return new Promise((resolve, reject) => {
 
             contatos.forEach(function (contato, indice) {
-
                 var li = document.createElement('li');
                 li.setAttribute('class', 'liHome');
                 li.setAttribute('id-contato', contato.codigoContato);
@@ -22,7 +21,7 @@ class Home {
                 var p1 = document.createElement('p');
                 p1.setAttribute('class', 'inicial-nome');
                 p1.innerHTML = contato.nome.substring(0, 1);
-                let cor = arrCores[Math.floor(Math.random() * arrCores.length)];
+                let cor ='#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);;
                 p1.style.backgroundColor = cor;
 
                 var p2 = document.createElement('p');

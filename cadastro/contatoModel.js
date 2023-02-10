@@ -20,28 +20,29 @@ class ContatoModel {
 
     adicionar(contato) {
 
-        if (this.validarObjetoContato(contato) === false) {
-            console.log("O objeto contato é inválido.");
-            return false;
-        }
-
-        let transaction = db.transaction(['contato'], 'readwrite');
-        let objectStore = transaction.objectStore('contato');
-        objectStore.add(contato);
-
-
-        if (transaction.onerror) {
-            var erro = transaction.onerror
-            console.log(erro);
-            console.log(erro.explicitOriginalTarget.error.message);
-            console.log(erro.explicitOriginalTarget.error.name);
-            console.log(erro.explicitOriginalTarget.source.indexNames[0]);
-            if (erro.explicitOriginalTarget.source.indexNames[0] === 'email') {
-                emailUtilizado()
-            };
-        }
-        // exibirMensagemContatoSalvo('Contato salvo com sucesso!')
-        // limpar()   
+        return new Promise((resolve, reject) => {
+            if (this.validarObjetoContato(contato) === false) {
+                console.log("O objeto contato é inválido.");
+                return false;
+            }
+    
+            let transaction = db.transaction(['contato'], 'readwrite');
+            let objectStore = transaction.objectStore('contato');
+            objectStore.add(contato);
+    
+    
+            if (transaction.onerror) {
+                var erro = transaction.onerror
+                console.log(erro);
+                console.log(erro.explicitOriginalTarget.error.message);
+                console.log(erro.explicitOriginalTarget.error.name);
+                console.log(erro.explicitOriginalTarget.source.indexNames[0]);
+                if (erro.explicitOriginalTarget.source.indexNames[0] === 'email') {
+                    emailUtilizado()
+                };
+            }
+            resolve('Contato salvo com sucesso!')     
+        })
     }
 
     excluir(codigo) {
@@ -58,7 +59,6 @@ class ContatoModel {
             console.log(err)
         }
     }
-
 
     listar() {
         return new Promise((resolve, reject) => {
@@ -91,6 +91,41 @@ class ContatoModel {
         });
     }
 
+    atualizar(contato) {
+        let erroInfo = {'error': false, 'message': ''}
+        return new Promise((resolve, reject) => {
+
+            var transaction = db.transaction(['contato'], 'readwrite');
+            let objectStore = transaction.objectStore('contato');
+            var request = objectStore.get(contato.codigoContato);
+
+            request.onerror = function (event) {
+                reject()
+            };
+
+            request.onsuccess = function (event) {
+                var contatoBanco = request.result;
+
+                contatoBanco.nome = contato.nome;
+                contatoBanco.sexo = contato.sexo;
+                contatoBanco.telefone = contato.telefone;
+                contatoBanco.email = contato.email;
+                contatoBanco.municipio = contato.municipio;
+                contatoBanco.observacao = contato.observacao;
+
+                var requestUpdate = objectStore.put(contatoBanco);
+
+                requestUpdate.onerror = function (event) {
+                    reject()
+                };
+
+                requestUpdate.onsuccess = function (event) {
+                    resolve('Atualização concluida.')
+
+                };
+            }
+        })
+    }
 }
 
 
@@ -104,13 +139,11 @@ function getContato(codigo) {
         let index = objectStore.index('codigoContato');
         let keyRangeValue = IDBKeyRange.only(codigo);
         let request = index.get(keyRangeValue);
-        let teste;
 
         request.onsuccess = function () {
             if (request.result) {
-                teste = request.result
                 console.log(request.result)
-                resolve(teste)
+                resolve(request.result)
             }
             else {
                 console.log('index não encontrado');
