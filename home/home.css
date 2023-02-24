@@ -167,7 +167,7 @@ li p {
 }
 
 
-#opcao1 {
+#button-home--cadastro {
   display: none;
 }
 
@@ -224,7 +224,7 @@ li p {
     display: inline;
   }
 
-  #opcao1 {
+  #button-home--cadastro {
     display: inline;
     background-color: #F78B60;
     color: #FEF1EC;
@@ -406,7 +406,7 @@ main {
 }
 
 
-#opcao1 {
+#button-home--cadastro {
   display: none;
 }
 
@@ -468,7 +468,7 @@ main {
     display: inline;
   }
 
-  #opcao1 {
+  #button-home--cadastro {
     display: inline;
     background-color: #F78B60;
     color: #FEF1EC;

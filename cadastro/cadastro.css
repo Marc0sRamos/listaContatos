@@ -71,12 +71,12 @@ html {
   color: #192C6F;
 }
 
-#btn-nao{
+#btn-nao {
   background-color: #192C6F;
   color: #FEF1EC;
 }
 
-#btn-avancar{
+#btn-avancar {
   background-color: #F78B60;
   color: #FEF1EC;
 }
@@ -262,7 +262,7 @@ li {
   background-color: #192C6F;
 }
 
-#opcao10 {
+#button-cadastro--home {
   display: none;
 }
 
@@ -272,12 +272,13 @@ li {
 
 @media screen and (max-width: 600px) {
 
-  main {
+  /* main {
     width: 80%;
-  }
+  } */
 
-  #img-ctt {
-    display: none;
+  #cadastroMain {
+    width: 80%;
+    margin: 0 auto;
   }
 
   #img-logo {
@@ -453,7 +454,7 @@ li {
     display: inline;
   }
 
-  #opcao10 {
+  #button-cadastro--home {
     display: inline;
     background-color: #F78B60;
     color: #FEF1EC;

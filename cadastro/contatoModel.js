@@ -26,11 +26,10 @@ class ContatoModel {
                 return false;
             }
     
-            let transaction = db.transaction(['contato'], 'readwrite');
-            let objectStore = transaction.objectStore('contato');
-            objectStore.add(contato);
-    
-    
+            let transaction = db.transaction(['contato'], 'readwrite')
+            .objectStore('contato')
+            .add(contato);
+
             if (transaction.onerror) {
                 var erro = transaction.onerror
                 console.log(erro);
@@ -41,7 +40,9 @@ class ContatoModel {
                     emailUtilizado()
                 };
             }
-            resolve('Contato salvo com sucesso!')     
+            transaction.onsuccess = function(event) {
+                resolve('Contato salvo com sucesso!')     
+            };
         })
     }
 
@@ -84,6 +85,17 @@ class ContatoModel {
             return false;
         }
 
+        if (contato.nome === '') {
+            console.log('nome invalido')
+            return false
+        }
+    
+        if (contato.sexo != 'F' && contato.sexo != 'M') {
+            console.log('sexo invalido')
+            return false
+        }
+
+
         var atributos = ['nome', 'telefone', 'email', 'municipio', 'sexo'];
 
         return atributos.every((atributo) => {
@@ -120,7 +132,7 @@ class ContatoModel {
                 };
 
                 requestUpdate.onsuccess = function (event) {
-                    resolve('Atualização concluida.')
+                    resolve('Contato atualizado com sucesso!')
 
                 };
             }

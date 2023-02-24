@@ -18,16 +18,13 @@
         <button type="button" class="mdl-button close" id="btn-avancar">OK</button>
     </div>
 </dialog>
-<!-- 
-<button id="demo-show-toast" class="mdl-button mdl-js-button mdl-button--raised" type="button">Show Toast</button>
-<div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
-    <div class="mdl-snackbar__text"></div>
-    <button class="mdl-snackbar__action" type="button"></button>
-</div> -->
-
 
 <main>
-
+    <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
+      <div class="mdl-snackbar__text"></div>
+      <button class="mdl-snackbar__action" type="button"></button>
+    </div>
+    
     <form action="#">
 
         <input type="hidden" id="id-contato">
@@ -65,11 +62,13 @@
 
         <br>
 
-        <i class="material-icons icone">mail</i>
-        <div class="text-form mdl-textfield mdl-js-textfield mdl-textfield--floating-label campo-nome">
-            <label class=" mdl-textfield__label" for="email-ctt"></label>
-            <input name="email" class="campo-nome mdl-textfield__input" type="email" id="email-ctt" placeholder="Email">
-            <span class="mdl-textfield__error">Digite um email valido!</span>
+        <div class="email-class">
+            <i class="material-icons icone">mail</i>
+            <div class="text-form mdl-textfield mdl-js-textfield mdl-textfield--floating-label campo-nome">
+                <label class=" mdl-textfield__label" for="email-ctt"></label>
+                <input name="email" class="campo-nome mdl-textfield__input" type="email" id="email-ctt" placeholder="Email">
+                <span class="mdl-textfield__error">Digite um email valido!</span>
+            </div>
         </div>
 
 
@@ -109,7 +108,7 @@
 
 <div class="fab1" ontouchstart="">
     <a href="">
-        <button class="mdl-button mdl-button--fab mdl-button-fab" id="opcao10">
+        <button class="mdl-button mdl-button--fab mdl-button-fab" id="button-cadastro--home">
             <i id="icone-home" class="material-icons">home</i>
         </button>
     </a>

@@ -30,12 +30,17 @@ class Formulario {
     povoarSelectMunicipio() {
         var select = document.getElementById('municipiosCadastro')
 
-        municipiosBaseRemota.forEach(function (municipio) {
+
+        let horaInicial = Date.now();
+        let contador = 0;
+
+        Object.keys(municipios).forEach(function (indice) {
             let option = document.createElement('option');
-            option.setAttribute('value', municipio.codigoIbge);
+            option.setAttribute('value', municipios[indice].codigoIbge);
             option.setAttribute('class', 'selectOption')
-            option.innerHTML = municipio.uf + " - " + municipio.nomeCidade
+            option.innerHTML = municipios[indice].uf + " - " + municipios[indice].nomeCidade
             select.appendChild(option);
+            
         });
 
         $('#municipiosCadastro').select2({
@@ -49,7 +54,14 @@ class Formulario {
 
     hidratar() {
         let nome = document.getElementById('nome-ctt').value;
-        let sexo = document.querySelector('input[name="sexo"]:checked');
+        let sexo;
+
+        if (document.getElementById('option-1').checked == true) {
+            sexo = document.getElementById('option-1').value = 'M'
+        } else if (document.getElementById('option-2').checked == true) {
+            sexo = document.getElementById('option-2').value = 'F'
+        }
+
         let telefone = [];
 
         $.each(document.getElementsByClassName('telefone'), function (indice, input) {
@@ -63,7 +75,6 @@ class Formulario {
         if (codigoContato.length !== 36) {
             codigoContato = uuidv4()
         }
-        console.log(sexo)
 
         this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato);
     };
@@ -142,7 +153,7 @@ class Formulario {
             let modelContato = new ContatoModel;
             modelContato.atualizar(this.contato)
                 .then((mensagem) => {
-                    exibirMensagemSucesso(mensagem);
+                    mensagemAtualizado(mensagem);
                 })
                 .catch((erro) => {
                     console.log(erro);
@@ -157,7 +168,13 @@ class Formulario {
 
             document.getElementById('id-contato').value = contato.codigoContato;
             document.getElementById('nome-ctt').value = contato.nome;
-            document.querySelector('input[name="sexo"]:checked').value = contato.sexo;
+
+            if(contato.sexo === 'M') {
+                document.getElementById('option-1').checked = true
+                console.log('masculino')
+            }else if (contato.sexo === 'F') {
+                document.getElementById('option-2').checked = true
+            }
 
             hidratarTelefone(0, contato)
 
@@ -174,6 +191,7 @@ class Formulario {
         })
     }
 }
+
 
 
 $(document).on('click', '#btn-salvar', function (e) {
@@ -193,15 +211,6 @@ $(document).on('click', '#btn-excluir', function (e) {
     }
 });
 
-
-
-
-
-
-
-
-
-
 function gerarContatos() {
     let nome = gerarNomeAleatorio()
 
@@ -209,7 +218,7 @@ function gerarContatos() {
         nome, 'M', gerarNumero(), gerarEmail(nome), getMunicipios(), gerarObservação()
     );
 
-    console.log(nome)
+    console.log(nome);
     let modelContato = new ContatoModel;
     modelContato.adicionar(contatoGerado);
 
@@ -221,11 +230,11 @@ function gerarNomeAleatorio() {
     let nome = "";
 
     for (contadorSilaba = 1; contadorSilaba <= quantidadeDeSilabas; contadorSilaba++) {
-
+        
         nome = nome + getConsoanteAleatoria() + getVogalAleatoria();
 
-    }
-    // console.log(nome)  
+    };
+     
     return nome;
 };
 
@@ -274,7 +283,7 @@ function gerarEmail(nome) {
 function getIbge() {
     let codigosIbge = []
 
-    municipiosBaseRemota.forEach(function (municipio, indice) {
+    municipios.forEach(function (municipio, indice) {
 
         codigosIbge[indice] = municipio.codigoIbge
 
@@ -303,21 +312,4 @@ function forContatos() {
 }
 
 
-let formulario = new Formulario();
-	formulario.povoarSelectMunicipio();
 
-// (function () {
-//     'use strict';
-//     window['counter'] = 0;
-
-// $(document).ready(function() {
-//     var snackbarContainer = document.querySelector('#demo-toast-example');
-//     var showToastButton = document.querySelector('#demo-show-toast');
-//     showToastButton.addEventListener('click', function () {
-//         'use strict';
-//         var data = { message: 'Example Message # ' + ++counter };
-//         snackbarContainer.MaterialSnackbar.showSnackbar(data);
-//     });
-// });
-
-// }());

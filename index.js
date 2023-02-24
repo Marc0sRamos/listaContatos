@@ -1,3 +1,5 @@
+var municipios = {}
+
 const rotas = {
 	"home": [
 		"/cadastros/home/home.html",
@@ -12,6 +14,13 @@ const usuario = {
 	"codigo": 22671,
 	"nome": "Marcos Tulio",
 };
+
+$(document).ready(function () {
+
+	carregarPaginaHome()
+
+});
+
 
 
 $("body").on('click', '.navegacao', function () {
@@ -47,15 +56,44 @@ function carregarPagina(argumentos) {
 		homeMain.style.display = 'none';
 
 		let formulario = new Formulario();
-		formulario.povoarSelectMunicipio;
-		limpar()
-		if (typeof formulario[argumentos.callback] === 'function') {
-			formulario.preencherFormulario(argumentos.id);
-		}
+		formulario.povoarSelectMunicipio();
+		// limpar()
+
+		// if (typeof formulario[argumentos.callback] === 'function') {
+		// 	formulario.preencherFormulario(argumentos.id);
+		// }
+
+	}
+}
+
+$(document).on('click', '#button-home--cadastro', function () {
+
+	var cadastroMain = document.getElementById("cadastroMain");
+	cadastroMain.style.display = 'flex';
+	var homeMain = document.getElementById("homeMain");
+	homeMain.style.display = 'none';
+
+	let formulario = new Formulario();
+	formulario.povoarSelectMunicipio();
+	// limpar()
+
+})
+
+
+$(document).on('click', '#button-cadastro--home', function () {
+
+	var homeMain = document.getElementById("homeMain");
+	homeMain.style.display = 'flex';
+	var cadastroMain = document.getElementById('cadastroMain');
+	cadastroMain.style.display = 'none';
+
+	let home = new Home();
+
+	if (typeof home[argumentos.callback] === 'function') {
+		home.listarContatos();
 	}
 
-
-}
+})
 
 
 

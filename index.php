@@ -29,6 +29,7 @@
 				<span class="mdl-layout-title">Contatos</span>
 			</div>
 		</header>
+
 		<div class="demo-drawer mdl-layout__drawer  mdl-color-text--blue-grey-50">
 			<i class="demo-drawer-header"> </i>
 			<img src="/cadastros/imagens/logo-ics.png" class="demo-avatar">
@@ -46,30 +47,48 @@
 		</div>
 	</div>
 	
-		<div id="imagem-logo">
-			<img id="img-logo" src="/cadastros/imagens/logo-ics.png" alt="">
-		</div>
+ <?php
+	// include 'orm/loadOrm.php';
+	// $sql = 'SELECT * FROM contato';
+	
+	// $cidade = select($pdo, $sql);
+	// echo '<pre>';
+	// print_r($cidade);
+	// exit;
 
-		<div class="mdl-layout__content" id="main">
-			<div class="mdl-layout__content">
-				<div id="homeMain">
-					<?php
-					include 'home/home.html';
-					?>
-				</div>
-				<div id="cadastroMain">
-					<?php
-					include 'cadastro/cadastro.html'
-					?>
-				</div>
+	// $sql = "INSERT INTO contato (id_contato,nome) VALUES ('41b6b4ec-63bc-4850-90f0-196d1b0bf6e1'
+	// ,'Joao')";
+	// $sql = "DELETE FROM contato WHERE nome=?";
+	// $insert = query($pdo, $sql,['Joao']);
+	// echo '<pre>';
+	// print_r($insert);
+	// exit;
+?> 
+
+	<div id="imagem-logo">
+		<img id="img-logo" src="/cadastros/imagens/logo-ics.png" alt="">
+	</div>
+
+	<div class="mdl-layout__content" id="main">
+		<div class="mdl-layout__content">
+			<div id="homeMain">
+				<?php
+				include 'home/home.html';
+				?>
+			</div>
+			<div id="cadastroMain">
+				<?php
+				include 'cadastro/cadastro.html'
+				?>
 			</div>
 		</div>
+	</div>
 
 </body>
-<script src="lib/cidades.js"></script>
+<script src="index.js"></script>
+
+<script src="lib/funcoes.js"></script>
 <script src="cadastro/contatoModel.js"></script>
 <script src="cadastro/cadastro.js"></script>
 <script src="home/home.js"></script>
-<script src="index.js"></script>
-
 </html>

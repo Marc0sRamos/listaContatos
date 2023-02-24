@@ -5,7 +5,6 @@ $(document).ready(function () {
     })
 });
 
-let municipios = {}
 let arrCores = ['#008000', '#0000FF', '#F4A460', '#4B0082', '#FF4500', '#4682B4', '#48D1CC', '#8B008B', '#FF4500', '#FFD700', '#B22222'];
 
 class Home {
