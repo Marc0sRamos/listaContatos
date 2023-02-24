@@ -49,7 +49,7 @@ class Formulario {
 
     hidratar() {
         let nome = document.getElementById('nome-ctt').value;
-        let sexo = document.querySelector('input[name="sexo"]:checked').value;
+        let sexo = document.querySelector('input[name="sexo"]:checked');
         let telefone = [];
 
         $.each(document.getElementsByClassName('telefone'), function (indice, input) {
@@ -63,6 +63,7 @@ class Formulario {
         if (codigoContato.length !== 36) {
             codigoContato = uuidv4()
         }
+        console.log(sexo)
 
         this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato);
     };

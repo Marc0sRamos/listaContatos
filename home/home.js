@@ -11,6 +11,7 @@ let arrCores = ['#008000', '#0000FF', '#F4A460', '#4B0082', '#FF4500', '#4682B4'
 class Home {
 
     povoarGrid(contatos) {
+        document.getElementById('listaContatos').innerHTML = ''
         return new Promise((resolve, reject) => {
 
             contatos.forEach(function (contato, indice) {
