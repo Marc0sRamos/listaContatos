@@ -30,7 +30,7 @@ class Home {
 
                 var p3 = document.createElement('p');
                 p3.setAttribute('class', 'mnc-ctt');
-                p3.innerHTML = municipios[contato.municipio].nomeCidade;
+                p3.innerHTML = cidadesBanco[contato.municipio].municipio;
 
                 var p4 = document.createElement('p');
                 p4.setAttribute('class', 'mnc-telefone');

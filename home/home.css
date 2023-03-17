@@ -363,11 +363,10 @@ main {
 }
 
 .inicial-nome {
-    height: 35px; 
-    width: 35px;
+    height: 40px; 
+    width: 25px;
     font-size: 1.3em;
     font-weight: 700;
-    min-width: 35px;
     text-align: center;
     display: flex;
     flex-direction: column;

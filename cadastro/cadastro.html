@@ -21,39 +21,39 @@
 
 <main>
     <div id="demo-toast-example" class="mdl-js-snackbar mdl-snackbar">
-      <div class="mdl-snackbar__text"></div>
-      <button class="mdl-snackbar__action" type="button"></button>
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
     </div>
-    
+
     <form action="#">
 
-        <input type="hidden" id="id-contato">
+        <input type="hidden" id="id-contato" class="limpar">
         <br>
 
         <i class="material-icons icone">person</i>
         <div class="text-form mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <label class=" mdl-textfield__label" for="nome-ctt"></label>
-            <input name="nome" class="campo-nome mdl-textfield__input" type="text" id="nome-ctt"
+            <input name="nome" class="campo-nome mdl-textfield__input limpar" type="text" id="nome-ctt"
                 placeholder="Nome completo">
         </div>
 
         <br>
         <i id="wc" class="icone material-icons">wc</i>
-        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
-            <input type="radio" id="option-1" class="mdl-radio__button" name="sexo" value="M">
+        <label class="mdl-radio" id="sexoM" for="option-1">
+            <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="M">
             <span class="mdl-radio__label">Masculino</span>
-        </label>
-        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
-            <input type="radio" id="option-2" class="mdl-radio__button" name="sexo" value="F">
+          </label>
+          <label class="mdl-radio " id="sexoF" for="option-2">
+            <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="F">
             <span class="mdl-radio__label">Feminino</span>
-        </label>
+          </label>
 
         <br>
 
         <i id="call" class="icone material-icons">call</i>
         <div id="telefone-ctt" class="text-form mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <label class="mdl-textfield__label"></label>
-            <input name="call" class="campo-nome mdl-textfield__input telefone" type="tel" placeholder="Telefone">
+            <input name="call" class="campo-nome mdl-textfield__input telefone limpar" type="tel" placeholder="Telefone">
         </div>
 
         <button id="add" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab">
@@ -66,7 +66,8 @@
             <i class="material-icons icone">mail</i>
             <div class="text-form mdl-textfield mdl-js-textfield mdl-textfield--floating-label campo-nome">
                 <label class=" mdl-textfield__label" for="email-ctt"></label>
-                <input name="email" class="campo-nome mdl-textfield__input" type="email" id="email-ctt" placeholder="Email">
+                <input name="email" class="campo-nome mdl-textfield__input limpar" type="email" id="email-ctt"
+                    placeholder="Email">
                 <span class="mdl-textfield__error">Digite um email valido!</span>
             </div>
         </div>

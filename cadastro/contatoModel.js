@@ -154,7 +154,6 @@ function getContato(codigo) {
 
         request.onsuccess = function () {
             if (request.result) {
-                console.log(request.result)
                 resolve(request.result)
             }
             else {

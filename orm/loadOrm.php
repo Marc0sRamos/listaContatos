@@ -1,5 +1,4 @@
 <?php 
 
-include 'orm/functions.orm.php';
-$pdo = include 'orm/conection.php';
-
+include './functions.orm.php';
+$pdo = include './conection.php';

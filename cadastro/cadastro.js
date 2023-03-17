@@ -1,11 +1,13 @@
 $("body #main").on("click", "#add", function (e) {
     e.preventDefault();
-    ButtonRemoverInput()
+   var idTelefone = criarInputTelefone()
+    criarBotaoRemover(idTelefone)
 });
 
 
 $('body #main').on("click", ".remove", function (e) {
     e.preventDefault();
+    console.log(document.getElementById($(this).attr('id-telefone')))
     document.getElementById($(this).attr('id-telefone')).remove();
     $(this).remove()
 });
@@ -30,17 +32,12 @@ class Formulario {
     povoarSelectMunicipio() {
         var select = document.getElementById('municipiosCadastro')
 
-
-        let horaInicial = Date.now();
-        let contador = 0;
-
-        Object.keys(municipios).forEach(function (indice) {
+        Object.keys(cidadesBanco).forEach(function (indice) {
             let option = document.createElement('option');
-            option.setAttribute('value', municipios[indice].codigoIbge);
+            option.setAttribute('value', indice);
             option.setAttribute('class', 'selectOption')
-            option.innerHTML = municipios[indice].uf + " - " + municipios[indice].nomeCidade
+            option.innerHTML = cidadesBanco[indice].uf + " - " + cidadesBanco[indice].municipio
             select.appendChild(option);
-            
         });
 
         $('#municipiosCadastro').select2({
@@ -53,6 +50,7 @@ class Formulario {
     };
 
     hidratar() {
+
         let nome = document.getElementById('nome-ctt').value;
         let sexo;
 
@@ -77,6 +75,7 @@ class Formulario {
         }
 
         this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato);
+
     };
 
     filtrarNome(nome) {
@@ -162,6 +161,7 @@ class Formulario {
     };
 
     preencherFormulario(idContato) {
+
         let contatoEdit = {}
 
         contatoEdit = getContato(idContato).then((contato) => {
@@ -169,18 +169,26 @@ class Formulario {
             document.getElementById('id-contato').value = contato.codigoContato;
             document.getElementById('nome-ctt').value = contato.nome;
 
-            if(contato.sexo === 'M') {
-                document.getElementById('option-1').checked = true
-                console.log('masculino')
-            }else if (contato.sexo === 'F') {
-                document.getElementById('option-2').checked = true
+            if (contato.sexo === 'M') {
+                var radioM = document.getElementById('option-1');
+                radioM.checked = true
+                var radioF = document.getElementById('option-2');
+                radioF.checked = false
+            } else if (contato.sexo === 'F') {
+                var radioM = document.getElementById('option-1');
+                radioM.checked = false;
+                var radioF = document.getElementById('option-2');
+                radioF.checked = true
+
             }
 
+                removerInputTelefone()
+            
             hidratarTelefone(0, contato)
-
             if (contato.telefone.length > 1) {
                 for (var indice = 1; indice < contato.telefone.length; indice++) {
-                    ButtonRemoverInput()
+                    var idTelefone = criarInputTelefone()
+                    criarBotaoRemover(idTelefone)
                     hidratarTelefone(indice, contato)
                 }
             }
@@ -190,6 +198,7 @@ class Formulario {
             document.getElementById('obs-ctt').value = contato.observacao;
         })
     }
+
 }
 
 
@@ -199,7 +208,6 @@ $(document).on('click', '#btn-salvar', function (e) {
     var formulario = new Formulario;
     formulario.salvar();
 });
-
 
 $(document).on('click', '#btn-excluir', function (e) {
     e.preventDefault();
@@ -230,11 +238,11 @@ function gerarNomeAleatorio() {
     let nome = "";
 
     for (contadorSilaba = 1; contadorSilaba <= quantidadeDeSilabas; contadorSilaba++) {
-        
+
         nome = nome + getConsoanteAleatoria() + getVogalAleatoria();
 
     };
-     
+
     return nome;
 };
 
@@ -283,7 +291,7 @@ function gerarEmail(nome) {
 function getIbge() {
     let codigosIbge = []
 
-    municipios.forEach(function (municipio, indice) {
+    cidadesBanco.forEach(function (municipio, indice) {
 
         codigosIbge[indice] = municipio.codigoIbge
 

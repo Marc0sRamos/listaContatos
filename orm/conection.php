@@ -18,7 +18,7 @@ function connect(string $host, string $db, string $user, string $password): PDO
 }
 
 
-$arrConfig = require 'orm/config.php';
+$arrConfig = require './config.php';
 
 return connect(
     $arrConfig['host'], 

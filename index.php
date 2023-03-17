@@ -47,23 +47,15 @@
 		</div>
 	</div>
 	
- <?php
+<?php
 	// include 'orm/loadOrm.php';
-	// $sql = 'SELECT * FROM contato';
-	
-	// $cidade = select($pdo, $sql);
-	// echo '<pre>';
-	// print_r($cidade);
-	// exit;
 
-	// $sql = "INSERT INTO contato (id_contato,nome) VALUES ('41b6b4ec-63bc-4850-90f0-196d1b0bf6e1'
-	// ,'Joao')";
-	// $sql = "DELETE FROM contato WHERE nome=?";
-	// $insert = query($pdo, $sql,['Joao']);
+	// $sql = "SELECT * FROM cidade";
+	// $cidades = select($pdo, $sql);
 	// echo '<pre>';
-	// print_r($insert);
+	// print_r($cidades);
 	// exit;
-?> 
+?>  
 
 	<div id="imagem-logo">
 		<img id="img-logo" src="/cadastros/imagens/logo-ics.png" alt="">

@@ -15,6 +15,7 @@ html {
   left: 550px;
 }
 
+
 #municipiosCadastro {
   margin-top: 20px;
 }
@@ -108,6 +109,7 @@ html {
   color: #FEF1EC;
 }
 
+
 #add {
   background-color: #192C6F;
   color: #FEF1EC;
@@ -118,7 +120,6 @@ html {
   min-width: 35px;
   width: 35px;
 }
-
 
 .btn-pag {
   display: flex;
@@ -169,7 +170,7 @@ main {
   background-color: #FFFFFF;
 }
 
-.input_novo {
+.input-telefone-novo {
   margin-top: 15px;
 }
 
@@ -191,7 +192,6 @@ li {
   color: #192C6F;
 }
 
-
 .select2-results {
   margin: 0 4px 4px 0;
   max-height: 240px;
@@ -208,11 +208,9 @@ li {
   margin: 0px;
 }
 
-
 .select2-container--default .select2-results>.select2-results__options {
   max-height: 150px !important;
 }
-
 
 
 .campo-email {
@@ -295,7 +293,7 @@ li {
 
   }
 
-  .input_novo {
+  .input-telefone-novo {
     margin-left: 30px;
   }
 
