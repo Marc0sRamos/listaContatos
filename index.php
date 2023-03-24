@@ -48,7 +48,7 @@
 	</div>
 	
 <?php
-	// include 'orm/loadOrm.php';
+	include 'orm/loadOrm.php';
 
 	// $sql = "SELECT * FROM cidade";
 	// $cidades = select($pdo, $sql);

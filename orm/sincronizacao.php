@@ -5,6 +5,13 @@
 class Contato
 {
 
+    private $pdo;
+
+    function __construct($pdo)
+    {
+        $this->pdo = include './conection.php';
+    }
+
     function filtrar_nome($contato)
     {
         return htmlspecialchars(trim($contato->nome));
@@ -20,18 +27,18 @@ class Contato
         return htmlspecialchars(trim($contato->observacao));
     }
 
-    function validar_nome($nomeCidadao)
+    function validar_nome($nomeContato)
     {
-        if (empty($nomeCidadao)) {
+        if (empty($nomeContato)) {
             return;
         }
 
         try {
 
-            $arrNome = explode(' ', $nomeCidadao);
+            $arrNome = explode(' ', $nomeContato);
 
             // Regra Nº 1
-            if (strlen($nomeCidadao) < 3) {
+            if (strlen($nomeContato) < 3) {
                 throw new Exception('O nome deve conter pelo menos três caracteres.');
             }
 
@@ -55,7 +62,7 @@ class Contato
              * @author Carlos Augusto <carlos@icsgo.com.br>
              * 
              */
-            $nome = mb_strtoupper(utf8_decode($nomeCidadao), 'ISO-8859-1');
+            $nome = mb_strtoupper(utf8_decode($nomeContato), 'ISO-8859-1');
             preg_match_all('/[^A-ZÁÉÍÓÚÂÊÎÔÛÃÕÑÄËÏÖÜKWYÝÇ\s\']+/i', $nome, $matches, PREG_SET_ORDER, 0);
             if (!empty($matches[0])) {
                 foreach ($matches[0] as $key => $char) {
@@ -83,40 +90,97 @@ class Contato
         }
     }
 
-    function validar_sexo($sexoCidadao)
+    function validar_sexo($sexoContato)
     {
-        if ($sexoCidadao !== 'M' && $sexoCidadao !== 'F') {
+        if ($sexoContato !== 'M' && $sexoContato !== 'F') {
             return false;
         }
     }
 
-
-    private $pdo;
-
-    function __construct($pdo)
+    function validar_email($emailContato)
     {
-        $this->pdo = include './conection.php';
+        if (filter_var($emailContato, FILTER_VALIDATE_EMAIL)) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
+    function validar_id($idContato)
+    {
+        if ($idContato < -32768 || $idContato >	32768) {
+            return false;
+        };
+    }
+
+    function validar_data($data)
+    {
+        // echo $data;
+        $dataExplode = (explode(" ",$data)); 
+        $teste =  substr('$dataExplode', 0, -1);
+        echo '<br>';
+        print_r($dataExplode);
+    }
+
+    function validar($contato) 
+    {
+     
+        try {
+
+            if($this->validar_email($contato->email) === false)
+            {
+                throw 'Email invalido!';
+            } 
+
+            if ($this->validar_nome($contato->nome) === false )
+            {
+                throw 'Nome do contato invalido.';
+            }
+
+            if($this->validar_sexo($contato->sexo) === false)
+            {
+                throw 'Sexo invalido!';
+            }
+
+            if($this->validar_id($contato->idUsuarioInsert)){
+                throw 'Erro';
+            }
+
+            if($this->validar_id($contato->id_usuario_ultima_sincronizacao)){
+                throw 'Erro';
+            }
+
+            // if($this->validar_data)
+
+            return true;
+
+        } catch (Exception $e) {
+            echo 'Exceção capturada: ' .  $e->getMessage() . "\n";
+        }
+    }
+
 
     public function insertContato(array $contatos)
     {
     
+
         try {
+
             foreach ($contatos as $contato) {
+                $this->validar_data($contato->dataInsert);
 
                 $contato->email = $this->filtrar_email($contato);
                 $contato->nome = $this->filtrar_nome($contato);
                 $contato->observacao = $this->filtrar_obs($contatos);
-                // VALIDAR
-                // $contato->nome = $this->validar_nome($contato->nome);
-
+                
                 $observacao = $contato->observacao;
-                if ($observacao == '') {
-                    $observacao = "NULL";
-                };
+                if ($observacao = ''){
+                    $observacao = 'NULL';
+                }
 
+                // $this->validar($contato);
 
-                $sql = "INSERT INTO contato (id_contato,email,nome,observacao,sexo,id_usuario_insert,id_usuario_ultima_sincronizacao, data_ultima_sincronizacao, data_insert) VALUES ('$contato->codigoContato', '$contato->email', '$contato->nome','$observacao', '$contato->sexo', $contato->idUsuarioInsert, $contato->id_usuario_ultima_sincronizacao, 'now()', '$contato->dataInsert')";
+                $sql = "INSERT INTO contato (id_contato,email,nome,observacao,sexo, data_ultima_sincronizacao, data_insert,id_usuario_ultima_sincronizacao,id_usuario_insert) VALUES ('$contato->codigoContato', '$contato->email', '$contato->nome','$observacao', '$contato->sexo', 'now()', '$contato->dataInsert', $contato->id_usuario_ultima_sincronizacao, $contato->idUsuarioInsert)";
 
                 $insert = $this->pdo->exec($sql);
             }
@@ -125,8 +189,6 @@ class Contato
         }
     }
 }
-
-
 
 $contatos = $_POST['contatos'];
 $contatos = json_decode($contatos);
