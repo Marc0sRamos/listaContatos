@@ -11,3 +11,8 @@
 #cadastroMain {
     display: none;
 }
+
+#btn-erros{
+    background-color: red !important;
+    color: #FFFFFF !important;
+  }

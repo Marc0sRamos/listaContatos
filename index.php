@@ -46,8 +46,8 @@
 			</nav>
 		</div>
 	</div>
-	
-<?php
+
+	<?php
 	include 'orm/loadOrm.php';
 
 	// $sql = "SELECT * FROM cidade";
@@ -55,11 +55,25 @@
 	// echo '<pre>';
 	// print_r($cidades);
 	// exit;
-?>  
+	?>
 
 	<div id="imagem-logo">
-		<img id="img-logo" src="/cadastros/imagens/logo-ics.png" alt="">
+		<button id="show-dialog" type="button" class="mdl-button">Show Dialog</button>
+		<dialog class="mdl-dialog">
+			<h4 class="mdl-dialog__title">Inconsistencias!</h4>
+			<div class="mdl-dialog__content">
+
+			</div>
+			<div class="mdl-dialog__actions">
+				<button type="button" class="mdl-button">Agree</button>
+				<button type="button" class="mdl-button close">Disagree</button>
+			</div>
+		</dialog>
 	</div>
+
+	<body>
+
+	</body>
 
 	<div class="mdl-layout__content" id="main">
 		<div class="mdl-layout__content">
@@ -83,4 +97,5 @@
 <script src="cadastro/contatoModel.js"></script>
 <script src="cadastro/cadastro.js"></script>
 <script src="home/home.js"></script>
+
 </html>

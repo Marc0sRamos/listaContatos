@@ -35,6 +35,8 @@ main {
   margin: 32px auto;
 }
 
+
+
 .app .content-list ul {
   display: grid;
   grid-gap: 24px;
