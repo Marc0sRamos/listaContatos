@@ -23,25 +23,6 @@ $(document).ready(function () {
 		})
 });
 
-var dialog = document.querySelector('dialog');
-var showDialogButton = document.querySelector('#show-dialog');
-if (!dialog.showModal) {
-	dialogPolyfill.registerDialog(dialog);
-}
-showDialogButton.addEventListener('click', function () {
-	dialog.showModal();
-});
-dialog.querySelector('.close').addEventListener('click', function () {
-	dialog.close();
-});
-
-var teste = document.getElementsByClassName("mdl-dialog__content").value = 'oiusa'
-var teste2 = document.te("Meu texto vai aqui");
-teste.appendChild(teste2)
-
-document.getElementById("meu_target").appendChild(teste)
-
-
 $("body").on('click', '.navegacao', function () {
 	let argumentos = {
 		'rota': $(this).attr('nome-rota'),
@@ -54,10 +35,13 @@ function carregarPagina(argumentos) {
 	$('.telefone').mask('(99) 99999-999?9');
 
 	if (argumentos.rota === 'home') {
+
 		var homeMain = document.getElementById("homeMain");
 		homeMain.style.display = 'flex';
 		var cadastroMain = document.getElementById('cadastroMain');
 		cadastroMain.style.display = 'none';
+		var inconsistenciaMain = document.getElementById('errosMain');
+		inconsistenciaMain.style.display = 'none';
 
 		let home = new Home();
 
@@ -91,6 +75,8 @@ $(document).on('click', '#button-home--cadastro', function () {
 	cadastroMain.style.display = 'flex';
 	var homeMain = document.getElementById("homeMain");
 	homeMain.style.display = 'none';
+	var inconsistenciaMain = document.getElementById('errosMain');
+	inconsistenciaMain.style.display = 'none';
 
 	let formulario = new Formulario();
 	formulario.povoarSelectMunicipio();
@@ -105,6 +91,8 @@ $(document).on('click', '#button-cadastro--home', function () {
 	homeMain.style.display = 'flex';
 	var cadastroMain = document.getElementById('cadastroMain');
 	cadastroMain.style.display = 'none';
+	var inconsistenciaMain = document.getElementById('errosMain');
+	inconsistenciaMain.style.display = 'none';
 
 	let home = new Home();
 
@@ -114,6 +102,28 @@ $(document).on('click', '#button-cadastro--home', function () {
 
 })
 
+$(document).on('click', '#button-erros', function () {
+	var homeMain = document.getElementById("homeMain");
+	homeMain.style.display = 'none';
+	var cadastroMain = document.getElementById('cadastroMain');
+	cadastroMain.style.display = 'none';
+	var inconsistenciaMain = document.getElementById('errosMain');
+	inconsistenciaMain.style.display = 'flex';
+})
+
+carregarInconsistencias()
+
+var sincErros = errosSINC
+
+function carregarInconsistencias() {
+	if (sincErros === undefined) {
+		var inconsistenciaMain = document.getElementById('button-erros');
+		inconsistenciaMain.style.display = 'none';
+	}else {
+		var inconsistenciaMain = document.getElementById('button-erros');
+		inconsistenciaMain.style.display = 'flex';
+	}
+}
 
 
 

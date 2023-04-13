@@ -212,7 +212,6 @@ li {
   max-height: 150px !important;
 }
 
-
 .campo-email {
   padding-bottom: 40px;
 }
@@ -229,12 +228,10 @@ li {
   color: #FEF1EC;
 }
 
-
 .mdl-layout__header-row>* {
   color: #192C6F;
   font-weight: 500;
 }
-
 
 #desc {
   margin-top: 20px;
@@ -249,7 +246,6 @@ li {
   color: #FEF1EC;
 }
 
-
 #btn-salvar {
   background-color: #192C6F;
   color: #FEF1EC;
@@ -263,7 +259,6 @@ li {
 #button-cadastro--home {
   display: none;
 }
-
 
 
 /* ------------------------------------------------------------------------------------------------------ */
@@ -346,13 +341,11 @@ li {
     height: 30px;
     width: 30px;
     min-width: 30px;
-
   }
 
   .mdl-mini-footer {
     color: #FEF1EC;
   }
-
 
   .mdl-layout__header .mdl-layout__drawer-button {
     display: none;
@@ -413,7 +406,6 @@ li {
   .fab1 button.mfab:before {
     content: '';
   }
-
 
   .fab1 button.mfab:active,
   .fab1 button.mfab:focus,

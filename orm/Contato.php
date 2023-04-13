@@ -19,9 +19,8 @@ class Contato
 
         try {
 
-            $this->pdo->beginTransaction();
-
             foreach ($contatos as $contato) {
+                $this->pdo->beginTransaction();
 
                 $contatoFilter = new ContatoFilter();
                 $contato->email = $contatoFilter->filtrarEmail($contato->email);
@@ -33,45 +32,57 @@ class Contato
                     continue;
                 }
 
+                if ($erro === true) {
+                    throw new Exception('Um ou mais contatos não foram validados!');
+                }
+
                 if ($contato->observacao === '') {
                     $contato->observacao = 'NULL';
                 }
 
-                $sql = "INSERT INTO contato (id_contato,email,nome,observacao,sexo, data_ultima_sincronizacao, data_insert,id_usuario_ultima_sincronizacao,id_usuario_insert)       
-                VALUES ('$contato->codigoContato', '$contato->email','$contato->nome', 
-                '$contato->observacao', '$contato->sexo', 'now()', '$contato->dataInsert', $contato->id_usuario_ultima_sincronizacao, $contato->idUsuarioInsert)";
+                $sqlSelectID = "SELECT id_contato FROM contato WHERE id_contato = '{$contato->codigoContato}'";
+                $selectID = $this->pdo->query($sqlSelectID);
 
-                $insert = $this->pdo->exec($sql);
-                if ($insert !== 1) {
-                    throw new Exception('Não foi possivel conectar no banco!');
+                if ($selectID->rowCount() > 0) {
+
+                    $sqlUptade = "UPDATE contato 
+                                    SET id_contato = '$contato->codigoContato', email = '$contato->email', nome = '$contato->nome' , observacao = '$contato->observacao', sexo = '$contato->sexo', data_ultima_sincronizacao = 'now()', data_insert = '$contato->dataInsert', id_usuario_ultima_sincronizacao = $contato->id_usuario_ultima_sincronizacao, id_usuario_insert = $contato->idUsuarioInsert
+                                    WHERE id_contato = '{$contato->codigoContato}'";
+
+                    $update = $this->pdo->exec($sqlUptade);
+
+                } else {
+
+                    $sql = "INSERT INTO contato (id_contato,email,nome,observacao,sexo,data_ultima_sincronizacao,data_insert,id_usuario_ultima_sincronizacao,id_usuario_insert)       
+                                VALUES ('$contato->codigoContato', '$contato->email', '$contato->nome', 
+                                '$contato->observacao', '$contato->sexo', 'now()', '$contato->dataInsert', '$contato->id_usuario_ultima_sincronizacao', '$contato->idUsuarioInsert')";
+      
+
+                    $insert = $this->pdo->exec($sql);
+                    if ($insert !== 1) {
+                        throw new Exception('Não foi possivel conectar no banco!');
+                    }
                 }
+
+                $this->pdo->commit();                
             }
-
-            if ($erro === true) {
-                throw new Exception('Um ou mais contatos não foram validados!');
-            }
-
-            $this->pdo->commit();
-
         } catch (Exception $e) {
-
+            
             $this->pdo->rollback();
 
-            $arrayErros = $contatoValidação->getErro();
+            $arrayErros[] = $contatoValidação->getErro();
 
             $jsonErros = json_encode($arrayErros);
             echo $jsonErros;
-            // converter array de erro em string json
-            // imprimir sting json
 
-            // echo 'Exceção capturada: ' .  $e->getMessage() . "\n";
         }
     }
 }
 
 $contatos = $_POST['contatos'];
 $contatos = json_decode($contatos);
-$contatos[2]->sexo = 'g';
+$contatos[1]->sexo = 'g';
+$contatos[0]->sexo = 'r';
 
 $contato = new Contato($pdo);
 $contato->insertContato($contatos);

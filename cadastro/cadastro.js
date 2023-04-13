@@ -90,6 +90,9 @@ class Formulario {
         return observacao.trim();
     };
 
+    filtrarTelefone(telefone){
+        return soNumero(telefone)
+    }
     
 
     validar() {
@@ -119,6 +122,18 @@ class Formulario {
             exibirMensagemDeErro(mensagem);
             return false;
         }
+    };
+
+    filtrar() {
+        var telefone = [];
+        this.contato.nome = this.filtrarNome(this.contato.nome);
+        this.contato.email = this.filtrarEmail(this.contato.email);
+        this.contato.observacao = this.filtrarObservacao(this.contato.observacao);
+        this.contato.municipio = document.getElementById('municipiosCadastro').value;
+        this.contato.telefone.forEach(function (value, indice) {
+            telefone.push(soNumero(value));
+        });
+        this.contato.telefone = telefone
     };
 
     salvar() {

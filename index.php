@@ -47,33 +47,15 @@
 		</div>
 	</div>
 
-	<?php
-	include 'orm/loadOrm.php';
-
-	// $sql = "SELECT * FROM cidade";
-	// $cidades = select($pdo, $sql);
-	// echo '<pre>';
-	// print_r($cidades);
-	// exit;
-	?>
 
 	<div id="imagem-logo">
-		<button id="show-dialog" type="button" class="mdl-button">Show Dialog</button>
-		<dialog class="mdl-dialog">
-			<h4 class="mdl-dialog__title">Inconsistencias!</h4>
-			<div class="mdl-dialog__content">
-
-			</div>
-			<div class="mdl-dialog__actions">
-				<button type="button" class="mdl-button">Agree</button>
-				<button type="button" class="mdl-button close">Disagree</button>
-			</div>
-		</dialog>
+		<img id="img-logo" src="/cadastros/imagens/logo-ics.png" alt="">
 	</div>
 
-	<body>
 
-	</body>
+	<div id="container_incosistencias">
+			<button id="button-erros" type="button" class="mdl-button" >Incosistencias!</button>
+	</div>
 
 	<div class="mdl-layout__content" id="main">
 		<div class="mdl-layout__content">
@@ -85,6 +67,11 @@
 			<div id="cadastroMain">
 				<?php
 				include 'cadastro/cadastro.html'
+				?>
+			</div>
+			<div id="errosMain">
+				<?php
+				include 'inconsistencia/erros.html'
 				?>
 			</div>
 		</div>

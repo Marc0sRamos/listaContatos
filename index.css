@@ -16,3 +16,15 @@
     background-color: red !important;
     color: #FFFFFF !important;
   }
+
+#button-erros {
+    background-color: #192C6F !important;
+    border-radius: 15px !important;
+    color: #FEF1EC !important;
+}
+
+#container_incosistencias{
+    margin: 30px;    
+    display: flex;
+    justify-content: end;
+}
