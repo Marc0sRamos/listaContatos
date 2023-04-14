@@ -82,7 +82,7 @@ class Contato
 $contatos = $_POST['contatos'];
 $contatos = json_decode($contatos);
 $contatos[1]->sexo = 'g';
-$contatos[0]->sexo = 'r';
+// $contatos[0]->sexo = 'r';
 
 $contato = new Contato($pdo);
 $contato->insertContato($contatos);

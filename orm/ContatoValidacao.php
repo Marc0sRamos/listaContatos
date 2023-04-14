@@ -8,6 +8,7 @@ class ContatoValidacao
     {
 
         try {
+            
 
             $arrNome = explode(' ', $nomeContato);
 
