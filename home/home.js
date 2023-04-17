@@ -63,7 +63,6 @@ class Home {
 
     listarContatos() {
         var contatoModel = new ContatoModel;
-
         contatoModel.listar()
             .then((contatos) => { return this.povoarGrid(contatos); })
             .then(() => { console.log('grid carregada com sucesso.') });

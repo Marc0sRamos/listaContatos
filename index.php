@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="index.css">
 	<link rel="stylesheet" href="/cadastros/cadastro/cadastro.css">
 	<link rel="stylesheet" href="/cadastros/home/home.css">
+	<link rel="stylesheet" href="/cadastros/inconsistencia/erros.css">
 	<script src="/cadastros/lib/jquery-3.6.1.min.js"></script>
 	<script src="/cadastros/lib/jquery-maskedinput/src/jquery.maskedinput.js"></script>
 	<script src="/cadastros/mdl/material.js"></script>

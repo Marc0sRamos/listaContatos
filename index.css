@@ -23,6 +23,10 @@
     color: #FEF1EC !important;
 }
 
+#button-erros:hover{
+    background-color: #F78B60 !important;
+}
+
 #container_incosistencias{
     margin: 30px;    
     display: flex;

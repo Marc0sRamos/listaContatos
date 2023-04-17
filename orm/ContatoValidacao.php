@@ -113,34 +113,33 @@ class ContatoValidacao
         try {
 
             if ($this->validarEmail($contato->email) === false) {
-                throw new Exception('O email do contato ' . $contato->nome . ' é invalido!');
+                throw new Exception('O email do contato "' . $contato->nome . '" é invalido!');
             }
 
             if ($this->validarNome($contato->nome) === false) {
-                throw new Exception('Nome do contato ' . $contato->nome . ' é invalido!');
+                throw new Exception('Nome do contato "' . $contato->nome . '" é invalido!');
             }
 
             if ($this->validarSexo($contato->sexo) === false) {
-                throw new Exception('Sexo do contato ' . $contato->nome . ' é invalido!');
+                throw new Exception('Sexo do contato "' . $contato->nome . '" é invalido!');
             }
 
             if ($this->validarId($contato->idUsuarioInsert) === false) {
                 throw new Exception('O ID do usuario que realizou o insert é invalido');
             }
-            return $this->mensagensErro;
 
             if ($this->validarId($contato->id_usuario_ultima_sincronizacao) === false) {
                 throw new Exception('O ID do usuario é invalido');
             }
 
             if ($this->validarData($contato->dataInsert) === false) {
-                throw new Exception('Data de insert do contato' . $contato->nome . ' é invalida!');
+                throw new Exception('Data de insert do contato "' . $contato->nome . '" é invalida!');
             }
 
             return true;
             
         } catch (Exception $e) {
-            $this->mensagensErro[] = 'Exceção capturada: ' .  $e->getMessage() . "\n";
+            $this->mensagensErro[] = $e->getMessage() . "\n";
             return false;
         }
     }

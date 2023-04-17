@@ -1,3 +1,12 @@
-.frases-erros{
-    font-size: 2em;
+.frases-erros {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-top: 10px;
+    color: #192C6F;
+}
+
+#icone-erro {
+    float: left;
+    margin-right: 10px;
+    color:#F78B60;
 }
