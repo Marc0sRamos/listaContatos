@@ -47,18 +47,22 @@ class ContatoModel {
     }
 
     excluir(codigo) {
-        let transaction = db.transaction(['contato'], 'readwrite')
-            .objectStore('contato')
-            .delete(codigo);
+        // let transaction = db.transaction(['contato'], 'readwrite')
+        //     .objectStore('contato')
+        //     .delete(codigo);
 
-        transaction.onsuccess = () => {
-            console.log('Contato excluido, com sucesso!');
-            carregarPagina({ "rota": "home", "callback": "listarContatos" });
-        }
+        // transaction.onsuccess = () => {
+        //     console.log('Contato excluido, com sucesso!');
+        //     carregarPagina({ "rota": "home", "callback": "listarContatos" });
+        // }
 
-        request.onerror = (err) => {
-            console.log(err)
-        }
+        // request.onerror = (err) => {
+        //     console.log(err)
+        // }
+    }
+
+    alterarStatus(){
+        
     }
 
     listar() {

@@ -16,11 +16,12 @@ class Contato
     {
         $contatoValidação = new ContatoValidacao();
         $erro = false;
+        $response = ['erro' => false, 'mensagem' => '', 'dados' => []];
 
         try {
+            $this->pdo->beginTransaction();
 
             foreach ($contatos as $contato) {
-                $this->pdo->beginTransaction();
 
                 $contatoFilter = new ContatoFilter();
                 $contato->email = $contatoFilter->filtrarEmail($contato->email);
@@ -30,10 +31,6 @@ class Contato
                 if ($contatoValidação->validarDados($contato) === false) {
                     $erro = true;
                     continue;
-                }
-
-                if ($erro === true) {
-                    throw new Exception('Um ou mais contatos não foram validados!');
                 }
 
                 if ($contato->observacao === '') {
@@ -64,25 +61,41 @@ class Contato
                     }
                 }
 
-                $this->pdo->commit();                
             }
+
+            if ($erro === true) {
+                throw new Exception('Um ou mais contatos não foram validados!');
+            }
+
+            $this->pdo->commit();
+
+            $response['mensagem'] = 'fasdafasdfdfd';
+
         } catch (Exception $e) {
             
             $this->pdo->rollback();
 
-            $arrayErros[] = $contatoValidação->getErro();
+            // $arrayErros = $contatoValidação->getErro();
 
-            $jsonErros = json_encode($arrayErros);
-            echo $jsonErros;
+            $response['erro'] = true;
+            $response['dados'] = $contatoValidação->getErro();
+
+
+            // $jsonErros = json_encode($arrayErros);
+            // echo $jsonErros;
 
         }
+
+        $json = json_encode($response);
+        echo $json;
     }
 }
 
 $contatos = $_POST['contatos'];
 $contatos = json_decode($contatos);
 $contatos[1]->sexo = 'g';
-// $contatos[0]->sexo = 'r';
+$contatos[1]->nome = 'Teste Três';
+$contatos[0]->sexo = 'r';
 
 $contato = new Contato($pdo);
 $contato->insertContato($contatos);

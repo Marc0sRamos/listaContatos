@@ -39,10 +39,16 @@
 			</div>
 			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-">
 				<a id="home" class="mdl-navigation__link navegacao" nome-rota="home" callback="listarContatos">
-					<i class="material-icons" role="presentation">home</i>Home
+					<i class="material-icons" role="presentation">home</i>
+					<p class="nome-botao">Home</p>
 				</a>
 				<a class="mdl-navigation__link navegacao" nome-rota="cadastro" callback="preencherFormulario">
-					<i class="material-icons" role="presentation">add</i>Criar novo contato
+					<i class="material-icons" role="presentation">add</i>
+					<p class="nome-botao">Criar novo contato</p>
+				</a>
+				<a id="btn-sincronizar" class="mdl-navigation__link">
+					<i class="material-icons" role="presentation">autorenew</i>
+					<p class="nome-botao">Sincronizar</p>
 				</a>
 			</nav>
 		</div>
@@ -55,7 +61,7 @@
 
 
 	<div id="container_incosistencias">
-			<button id="button-erros" type="button" class="mdl-button" >Incosistencias!</button>
+		<button id="button-erros" type="button" class="mdl-button">Incosistencias!</button>
 	</div>
 
 	<div class="mdl-layout__content" id="main">

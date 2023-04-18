@@ -8,6 +8,14 @@
     display: none;
 }
 
+.mdl-navigation__link{
+    display: flex !important;
+}
+
+.nome-botao{
+    font-weight: 500;
+}
+
 #cadastroMain {
     display: none;
 }
@@ -32,3 +40,4 @@
     display: flex;
     justify-content: end;
 }
+

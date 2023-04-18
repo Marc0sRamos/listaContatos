@@ -14,7 +14,7 @@ $('body #main').on("click", ".remove", function (e) {
 
 class Contato {
 
-    constructor(nome, sexo, telefone, email, municipio, observacao, codigoContato) {
+    constructor(nome, sexo, telefone, email, municipio, observacao, codigoContato, statusExcluido) {
         this.nome = nome;
         this.sexo = sexo;
         this.telefone = telefone;
@@ -23,7 +23,8 @@ class Contato {
         this.observacao = observacao;
         this.codigoContato = codigoContato;
         this.idUsuarioInsert = usuario.codigo;
-        this.dataInsert = Date.now()
+        this.dataInsert = Date.now();
+        this.statusExcluido = statusExcluido;
     }
 }
 
@@ -74,7 +75,9 @@ class Formulario {
             codigoContato = uuidv4()
         }
 
-        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato);
+        let status = document.getElementById('statusExcluido').value = false
+
+        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato, status);
 
     };
 
@@ -165,6 +168,10 @@ class Formulario {
         }
     };
 
+    excluir() {
+        
+    }
+
     preencherFormulario(idContato) {
 
         let contatoEdit = {}
@@ -219,8 +226,9 @@ $(document).on('click', '#btn-excluir', function (e) {
     resultado = window.confirm('Deseja realmente excluir o contato?');
     if (resultado == true) {
         var idContato = document.getElementById('id-contato').value
-        let contatomodel = new ContatoModel;
-        contatomodel.excluir(idContato);
+        var status = document.getElementById('statusExcluido').value = true
+        // let contatomodel = new ContatoModel;
+        // contatomodel.excluir(idContato);
     }
 });
 

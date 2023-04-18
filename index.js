@@ -56,6 +56,8 @@ function carregarPagina(argumentos) {
 		cadastroMain.style.display = 'flex';
 		var homeMain = document.getElementById("homeMain");
 		homeMain.style.display = 'none';
+		var inconsistenciaMain = document.getElementById('errosMain');
+		inconsistenciaMain.style.display = 'none';
 
 		let formulario = new Formulario();
 		limpar()
@@ -111,12 +113,13 @@ $(document).on('click', '#button-erros', function () {
 	inconsistenciaMain.style.display = 'flex';
 })
 
-carregarInconsistencias()
+$(document).on('click', '#btn-sincronizar', function (){
+	alert('oi')
+})
 
-var sincErros = errosSINC
-
-function carregarInconsistencias() {
-	if (sincErros === undefined) {
+carregarInconsistencias(false)
+function carregarInconsistencias(erros) {
+	if (erros === false) {
 		var inconsistenciaMain = document.getElementById('button-erros');
 		inconsistenciaMain.style.display = 'none';
 	}else {
