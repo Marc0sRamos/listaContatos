@@ -61,27 +61,26 @@ p {
   padding: 0px 10px;
 }
 
-.mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
-  background-color: #192C6F;
-  color: #FFFFFF;
-  border-radius: 81px;
-  width: 67%;
-  margin: 20px auto;
-}
-
-
 .mdl-layout__drawer {
   background-color: #FFFFFF;
 }
 
-
-.mdl-layout__drawer .mdl-navigation .mdl-navigation__link:hover {
-  background-color: #F78B60;
-  color: #FEF1EC;
-  transition: 0.5s;
-  opacity: 0.7;
+.li-block {
+  cursor: not-allowed;
+  background-color: #faf3f15c;
 }
 
+.nome-excluido {
+  color: #192c6f48 !important;
+}
+
+.cidade-excluido {
+  color: #192c6f48 !important;
+}
+
+.telefone-excluido {
+  color: #192c6f48 !important;
+}
 
 #img-logo {
   margin: 30px 200px;
@@ -318,14 +317,15 @@ main {
   color: #FEF1EC;
 }
 
-
+/* 
 .mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
   background-color: #192C6F;
   color: #FFFFFF;
-  border-radius: 81px;
-  width: 67%;
-  margin: 20px auto;
-}
+  border-radius: 5px;
+  width: 50%;
+  height: 30px;
+  /* margin: 20px 20px; */
+
 
 
 .mdl-layout__drawer {

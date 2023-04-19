@@ -61,9 +61,6 @@ class ContatoModel {
         // }
     }
 
-    alterarStatus(){
-        
-    }
 
     listar() {
         return new Promise((resolve, reject) => {
@@ -128,6 +125,7 @@ class ContatoModel {
                 contatoBanco.email = contato.email;
                 contatoBanco.municipio = contato.municipio;
                 contatoBanco.observacao = contato.observacao;
+                contatoBanco.statusExcluido = contato.statusExcluido
 
                 var requestUpdate = objectStore.put(contatoBanco);
 

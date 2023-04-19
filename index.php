@@ -24,32 +24,47 @@
 
 <body>
 	<div class="demo-layout mdl-layout mdl-js-layout  mdl-layout--fixed-header ">
+
 		<header class="mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-900">
 			<div class="mdl-layout__header-row">
 				<img id="img-ctt" src="/cadastros/imagens/contacts_2022_48dp.png" alt="">
 				<span class="mdl-layout-title">Contatos</span>
 			</div>
+
 		</header>
 
 		<div class="demo-drawer mdl-layout__drawer  mdl-color-text--blue-grey-50">
 			<i class="demo-drawer-header"> </i>
 			<img src="/cadastros/imagens/logo-ics.png" class="demo-avatar">
+
 			<div class="demo-avatar-dropdown">
 				<div class="mdl-layout-spacer"></div>
 			</div>
+
 			<nav class="demo-navigation mdl-navigation mdl-color--blue-grey-">
-				<a id="home" class="mdl-navigation__link navegacao" nome-rota="home" callback="listarContatos">
-					<i class="material-icons" role="presentation">home</i>
-					<p class="nome-botao">Home</p>
-				</a>
-				<a class="mdl-navigation__link navegacao" nome-rota="cadastro" callback="preencherFormulario">
-					<i class="material-icons" role="presentation">add</i>
-					<p class="nome-botao">Criar novo contato</p>
-				</a>
-				<a id="btn-sincronizar" class="mdl-navigation__link">
-					<i class="material-icons" role="presentation">autorenew</i>
-					<p class="nome-botao">Sincronizar</p>
-				</a>
+
+				<div class="container-botoes--container">
+					<div class="botoes-container">
+						<div class="home-container">
+							<a id="home" class="mdl-navigation__link navegacao" nome-rota="home" callback="listarContatos">
+								<i class="material-icons nome-botao" role="presentation">home</i>
+								<p class="nome-botao">Inicio</p>
+							</a>
+						</div>
+						<div class="cadastro-container">
+							<a class="mdl-navigation__link navegacao" nome-rota="cadastro" callback="preencherFormulario">
+								<i class="material-icons nome-botao" role="presentation">add</i>
+								<p class="nome-botao">Novo contato</p>
+							</a>
+						</div>
+						<div class="sincronizar-container">
+							<a id="btn-sincronizar" class="mdl-navigation__link">
+								<i class="material-icons nome-botao" role="presentation">autorenew</i>
+								<p class="nome-botao">Sincronizar</p>
+							</a>
+						</div>
+					</div>
+				</div>
 			</nav>
 		</div>
 	</div>

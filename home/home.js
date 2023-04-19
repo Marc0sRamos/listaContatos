@@ -1,7 +1,7 @@
 $(document).ready(function () {
-    $(document).on('click', '.liHome', function() {
+    $(document).on('click', '.liHome', function () {
         let idContato = $(this).attr('id-contato');
-        carregarPagina({"rota": "cadastro", "callback": "preencherFormulario", "id": idContato})
+        carregarPagina({ "rota": "cadastro", "callback": "preencherFormulario", "id": idContato })
     })
 });
 
@@ -17,11 +17,14 @@ class Home {
                 var li = document.createElement('li');
                 li.setAttribute('class', 'liHome');
                 li.setAttribute('id-contato', contato.codigoContato);
+                var div = document.createElement('div');
+                div.setAttribute('class', 'container-li');
+                var div2 = document.createElement('class', 'container-li--contato')
 
                 var p1 = document.createElement('p');
                 p1.setAttribute('class', 'inicial-nome');
                 p1.innerHTML = contato.nome.substring(0, 1);
-                let cor ='#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);;
+                let cor = '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);;
                 p1.style.backgroundColor = cor;
 
                 var p2 = document.createElement('p');
@@ -35,27 +38,36 @@ class Home {
                 var p4 = document.createElement('p');
                 p4.setAttribute('class', 'mnc-telefone');
 
-                var numero = contato.telefone[0].toString()                      
+                var numero = contato.telefone[0].toString()
 
                 if (numero.length == 11) {
-                    var ddd = numero.slice(0,2);
-                    var nonoDigito = numero.slice(2,3);
-                    var numeroParteUm = numero.slice(3,7);
-                    var numeroParteDois = numero.slice(7,11);
-                   p4.innerHTML = '(' + ddd + ') ' + nonoDigito + "-" + numeroParteUm + "-" + numeroParteDois;
-            
+                    var ddd = numero.slice(0, 2);
+                    var nonoDigito = numero.slice(2, 3);
+                    var numeroParteUm = numero.slice(3, 7);
+                    var numeroParteDois = numero.slice(7, 11);
+                    p4.innerHTML = '(' + ddd + ') ' + nonoDigito + "-" + numeroParteUm + "-" + numeroParteDois;
+
                 } else {
-                    var ddd = numero.slice(0,2);
-                    var numeroParteUm = numero.slice(2,6);
-                    var numeroParteDois = numero.slice(6,10);
+                    var ddd = numero.slice(0, 2);
+                    var numeroParteUm = numero.slice(2, 6);
+                    var numeroParteDois = numero.slice(6, 10);
                     p4.innerHTML = '(' + ddd + ') ' + numeroParteUm + "-" + numeroParteDois;
                 }
-                         
+
+                if (contato.statusExcluido === true) {
+                    li.setAttribute('class', 'li-block')
+                    p2.setAttribute('class', 'nome-excluido mnc-ctt-nome')
+                    p3.setAttribute('class', 'cidade-excluido mnc-ctt')
+                    p4.setAttribute('class', 'telefone-excluido mnc-telefone')
+
+                }
+
+                div.appendChild(li)
                 li.appendChild(p1);
                 li.appendChild(p2);
                 li.appendChild(p3);
                 li.appendChild(p4);
-                document.getElementById('listaContatos').appendChild(li)
+                document.getElementById('listaContatos').appendChild(div)
                 resolve();
             });
         });
@@ -66,6 +78,6 @@ class Home {
         contatoModel.listar()
             .then((contatos) => { return this.povoarGrid(contatos); })
             .then(() => { console.log('grid carregada com sucesso.') });
-    }  
+    }
 }
 

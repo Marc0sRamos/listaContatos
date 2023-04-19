@@ -52,20 +52,6 @@ html {
   margin: 10px;
 }
 
-.mdl-layout__drawer .mdl-navigation .mdl-navigation__link {
-  background-color: #192C6F;
-  color: #FFFFFF;
-  border-radius: 81px;
-  width: 67%;
-  margin: 20px auto;
-}
-
-.mdl-layout__drawer .mdl-navigation .mdl-navigation__link:hover {
-  background-color: #F78B60;
-  color: #FEF1EC;
-  transition: 0.5s;
-  opacity: 0.7;
-}
 
 ::placeholder {
   padding-left: 10px;

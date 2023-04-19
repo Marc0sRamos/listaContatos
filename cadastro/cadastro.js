@@ -1,6 +1,6 @@
 $("body #main").on("click", "#add", function (e) {
     e.preventDefault();
-   var idTelefone = criarInputTelefone()
+    var idTelefone = criarInputTelefone()
     criarBotaoRemover(idTelefone)
 });
 
@@ -75,9 +75,9 @@ class Formulario {
             codigoContato = uuidv4()
         }
 
-        let status = document.getElementById('statusExcluido').value = false
+        let statusExcluido = document.getElementById('statusExcluido').value = false
 
-        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato, status);
+        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato, statusExcluido);
 
     };
 
@@ -93,10 +93,10 @@ class Formulario {
         return observacao.trim();
     };
 
-    filtrarTelefone(telefone){
+    filtrarTelefone(telefone) {
         return soNumero(telefone)
     }
-    
+
 
     validar() {
         try {
@@ -168,69 +168,92 @@ class Formulario {
         }
     };
 
-    excluir() {
-        
+    excluir(idContato, status) {
+
+        if (status = 'false') {
+            var contatoEdit = []
+            contatoEdit = getContato(idContato).then((contato) => {
+                console.log(contato);
+                console.log(contato.statusExcluido)
+                contato.statusExcluido = true; 
+                console.log(contato)
+                let modelContato = new ContatoModel;
+                modelContato.atualizar(contato)
+                    .then((mensagem) => {
+                        mensagemAtualizado('O contato será excluido apos a sincronização');
+                    })
+                    .catch((erro) => {
+                        console.log(erro);
+                    })
+            })
+
+        }
     }
+        preencherFormulario(idContato) {
 
-    preencherFormulario(idContato) {
+            let contatoEdit = {}
 
-        let contatoEdit = {}
+            contatoEdit = getContato(idContato).then((contato) => {
 
-        contatoEdit = getContato(idContato).then((contato) => {
+                document.getElementById('id-contato').value = contato.codigoContato;
+                document.getElementById('statusExcluido').value = contato.statusExcluido
+                document.getElementById('nome-ctt').value = contato.nome;
 
-            document.getElementById('id-contato').value = contato.codigoContato;
-            document.getElementById('nome-ctt').value = contato.nome;
+                if (contato.sexo === 'M') {
+                    var radioM = document.getElementById('option-1');
+                    radioM.checked = true
+                    var radioF = document.getElementById('option-2');
+                    radioF.checked = false
+                } else if (contato.sexo === 'F') {
+                    var radioM = document.getElementById('option-1');
+                    radioM.checked = false;
+                    var radioF = document.getElementById('option-2');
+                    radioF.checked = true
 
-            if (contato.sexo === 'M') {
-                var radioM = document.getElementById('option-1');
-                radioM.checked = true
-                var radioF = document.getElementById('option-2');
-                radioF.checked = false
-            } else if (contato.sexo === 'F') {
-                var radioM = document.getElementById('option-1');
-                radioM.checked = false;
-                var radioF = document.getElementById('option-2');
-                radioF.checked = true
-
-            }
+                }
 
                 removerInputTelefone()
-            
-            hidratarTelefone(0, contato)
-            if (contato.telefone.length > 1) {
-                for (var indice = 1; indice < contato.telefone.length; indice++) {
-                    var idTelefone = criarInputTelefone()
-                    criarBotaoRemover(idTelefone)
-                    hidratarTelefone(indice, contato)
+
+                hidratarTelefone(0, contato)
+                if (contato.telefone.length > 1) {
+                    for (var indice = 1; indice < contato.telefone.length; indice++) {
+                        var idTelefone = criarInputTelefone()
+                        criarBotaoRemover(idTelefone)
+                        hidratarTelefone(indice, contato)
+                    }
                 }
-            }
 
-            $("#municipiosCadastro").val(contato.municipio).trigger('change');
-            document.getElementById('email-ctt').value = contato.email;
-            document.getElementById('obs-ctt').value = contato.observacao;
-        })
+                $("#municipiosCadastro").val(contato.municipio).trigger('change');
+                document.getElementById('email-ctt').value = contato.email;
+                document.getElementById('obs-ctt').value = contato.observacao;
+            })
+        }
+
     }
 
-}
 
 
+    $(document).on('click', '#btn-salvar', function(e) {
+        e.preventDefault();
+        var formulario = new Formulario;
+        formulario.salvar();
+    });
 
-$(document).on('click', '#btn-salvar', function (e) {
-    e.preventDefault();
-    var formulario = new Formulario;
-    formulario.salvar();
-});
+    $(document).on('click', '#btn-excluir', function(e) {
+        e.preventDefault();
+        resultado = window.confirm('Deseja realmente excluir o contato?');
+        if (resultado == true) {
+            var idContato = document.getElementById('id-contato').value
+            var status = document.getElementById('statusExcluido').value
+            console.log(status)
+            let formulario = new Formulario;
+            formulario.excluir(idContato, status)
 
-$(document).on('click', '#btn-excluir', function (e) {
-    e.preventDefault();
-    resultado = window.confirm('Deseja realmente excluir o contato?');
-    if (resultado == true) {
-        var idContato = document.getElementById('id-contato').value
-        var status = document.getElementById('statusExcluido').value = true
-        // let contatomodel = new ContatoModel;
-        // contatomodel.excluir(idContato);
-    }
-});
+
+            // let contatomodel = new ContatoModel;
+            // contatomodel.excluir(idContato);
+        }
+    });
 
 function gerarContatos() {
     let nome = gerarNomeAleatorio()

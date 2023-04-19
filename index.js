@@ -114,7 +114,7 @@ $(document).on('click', '#button-erros', function () {
 })
 
 $(document).on('click', '#btn-sincronizar', function (){
-	alert('oi')
+	teste22();
 })
 
 carregarInconsistencias(false)
