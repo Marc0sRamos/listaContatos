@@ -81,8 +81,9 @@ class ContatoValidacao
         }
     }
 
-    function validarId(int $idContato): bool
+    function validarId($idContato): bool
     {
+        var_dump(($idContato));
         if ($idContato > 0 && $idContato <  32768) {
             return true;
         } else {

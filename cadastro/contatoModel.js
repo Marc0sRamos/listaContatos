@@ -1,5 +1,5 @@
 var db;
-var request = window.indexedDB.open("DBcontatos", 1);
+var request = window.indexedDB.open("DBcontato", 2);
 
 request.onerror = function (event) {
     console.log("Não foi possivel conectar na base de dados!");
@@ -10,6 +10,7 @@ request.onupgradeneeded = function (event) {
     var contatoObjectStore = db.createObjectStore("contato", { keyPath: "codigoContato" });
     contatoObjectStore.createIndex('email', 'email', { unique: true });
     contatoObjectStore.createIndex('codigoContato', 'codigoContato', { unique: true });
+    contatoObjectStore.createIndex('status', 'status', { unique: false });
 }
 
 request.onsuccess = function (event) {
@@ -19,16 +20,15 @@ request.onsuccess = function (event) {
 class ContatoModel {
 
     adicionar(contato) {
-
         return new Promise((resolve, reject) => {
             if (this.validarObjetoContato(contato) === false) {
                 console.log("O objeto contato é inválido.");
                 return false;
             }
-    
+
             let transaction = db.transaction(['contato'], 'readwrite')
-            .objectStore('contato')
-            .add(contato);
+                .objectStore('contato')
+                .add(contato);
 
             if (transaction.onerror) {
                 var erro = transaction.onerror
@@ -40,27 +40,59 @@ class ContatoModel {
                     emailUtilizado()
                 };
             }
-            transaction.onsuccess = function(event) {
-                resolve('Contato salvo com sucesso!')     
+            transaction.onsuccess = function (event) {
+                resolve('Contato salvo com sucesso!')
             };
         })
     }
 
-    excluir(codigo) {
-        // let transaction = db.transaction(['contato'], 'readwrite')
-        //     .objectStore('contato')
-        //     .delete(codigo);
+    excluir() {
+        var contatoModel = new ContatoModel
+        var contatoModel = new ContatoModel;
 
-        // transaction.onsuccess = () => {
-        //     console.log('Contato excluido, com sucesso!');
-        //     carregarPagina({ "rota": "home", "callback": "listarContatos" });
-        // }
+        contatoModel.listar()
+            .then((contatos) => {
+                contatos.forEach(function (contato) {
 
-        // request.onerror = (err) => {
-        //     console.log(err)
-        // }
+                    if (contato.status === 'excluido') {
+                        let transaction = db.transaction(['contato'], 'readwrite')
+                            .objectStore('contato')
+                            .delete(contato.codigoContato);
+
+                        transaction.onsuccess = () => {
+                            console.log('Contato excluido, com sucesso!');
+                            carregarPagina({ "rota": "home", "callback": "listarContatos" });
+                        }
+
+                        request.onerror = (err) => {
+                            console.log(err)
+                        }
+                    }
+                    
+                })
+            })
     }
 
+    getContatosAtivos() {
+        return new Promise((resolve, reject) => {
+            let contatosAtivos = [];
+            let objectStore = db.transaction(['contato'], 'readonly').objectStore('contato');
+            let status = objectStore.index('status');
+            let cursorRequest = status.openCursor(IDBKeyRange.only('ativo'));
+            cursorRequest.onsuccess = function (event) {
+                let cursor = event.target.result;
+                if (cursor) {
+                    contatosAtivos.push(cursor.value);
+                    cursor.continue();
+                } else {
+                    resolve(contatosAtivos);
+                }
+            };
+            cursorRequest.onerror = function (event) {
+                reject('Não foi possível obter os contatos ativos.');
+            };
+        });
+    }
 
     listar() {
         return new Promise((resolve, reject) => {
@@ -90,7 +122,7 @@ class ContatoModel {
             console.log('nome invalido')
             return false
         }
-    
+
         if (contato.sexo != 'F' && contato.sexo != 'M') {
             console.log('sexo invalido')
             return false
@@ -105,7 +137,7 @@ class ContatoModel {
     }
 
     atualizar(contato) {
-        let erroInfo = {'error': false, 'message': ''}
+        let erroInfo = { 'error': false, 'message': '' }
         return new Promise((resolve, reject) => {
 
             var transaction = db.transaction(['contato'], 'readwrite');
@@ -125,7 +157,7 @@ class ContatoModel {
                 contatoBanco.email = contato.email;
                 contatoBanco.municipio = contato.municipio;
                 contatoBanco.observacao = contato.observacao;
-                contatoBanco.statusExcluido = contato.statusExcluido
+                contatoBanco.status = contato.status
 
                 var requestUpdate = objectStore.put(contatoBanco);
 
@@ -141,7 +173,6 @@ class ContatoModel {
         })
     }
 }
-
 
 function getContato(codigo) {
 

@@ -14,7 +14,7 @@ $('body #main').on("click", ".remove", function (e) {
 
 class Contato {
 
-    constructor(nome, sexo, telefone, email, municipio, observacao, codigoContato, statusExcluido) {
+    constructor(nome, sexo, telefone, email, municipio, observacao, codigoContato, excluido) {
         this.nome = nome;
         this.sexo = sexo;
         this.telefone = telefone;
@@ -24,7 +24,7 @@ class Contato {
         this.codigoContato = codigoContato;
         this.idUsuarioInsert = usuario.codigo;
         this.dataInsert = Date.now();
-        this.statusExcluido = statusExcluido;
+        this.status = excluido;
     }
 }
 
@@ -51,7 +51,6 @@ class Formulario {
     };
 
     hidratar() {
-
         let nome = document.getElementById('nome-ctt').value;
         let sexo;
 
@@ -75,9 +74,9 @@ class Formulario {
             codigoContato = uuidv4()
         }
 
-        let statusExcluido = document.getElementById('statusExcluido').value = false
+        let excluido = document.getElementById('statusExcluido').value = 'ativo'
 
-        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato, statusExcluido);
+        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato, excluido);
 
     };
 
@@ -96,7 +95,6 @@ class Formulario {
     filtrarTelefone(telefone) {
         return soNumero(telefone)
     }
-
 
     validar() {
         try {
@@ -140,13 +138,9 @@ class Formulario {
     };
 
     salvar() {
-        // hidrata o objeto contato
         this.hidratar();
-        // filtra os atributos do objeto contato
         this.filtrar();
-        // valida os atributos do objeto contato
         this.validar();
-        // salva no banco
         var idContato = document.getElementById('id-contato').value;
 
         if (idContato.length !== 36) {
@@ -169,13 +163,12 @@ class Formulario {
     };
 
     excluir(idContato, status) {
-
-        if (status = 'false') {
+        if (status = 'ativo') {
             var contatoEdit = []
             contatoEdit = getContato(idContato).then((contato) => {
                 console.log(contato);
-                console.log(contato.statusExcluido)
-                contato.statusExcluido = true; 
+                console.log(contato.excluido)
+                contato.status = 'excluido';
                 console.log(contato)
                 let modelContato = new ContatoModel;
                 modelContato.atualizar(contato)
@@ -189,171 +182,64 @@ class Formulario {
 
         }
     }
-        preencherFormulario(idContato) {
 
-            let contatoEdit = {}
+    preencherFormulario(idContato) {
+        let contatoEdit = {}
 
-            contatoEdit = getContato(idContato).then((contato) => {
+        contatoEdit = getContato(idContato).then((contato) => {
+            document.getElementById('id-contato').value = contato.codigoContato;
+            document.getElementById('statusExcluido').value = contato.excluido
+            document.getElementById('nome-ctt').value = contato.nome;
 
-                document.getElementById('id-contato').value = contato.codigoContato;
-                document.getElementById('statusExcluido').value = contato.statusExcluido
-                document.getElementById('nome-ctt').value = contato.nome;
+            if (contato.sexo === 'M') {
+                var radioM = document.getElementById('option-1');
+                radioM.checked = true
+                var radioF = document.getElementById('option-2');
+                radioF.checked = false
+            } else if (contato.sexo === 'F') {
+                var radioM = document.getElementById('option-1');
+                radioM.checked = false;
+                var radioF = document.getElementById('option-2');
+                radioF.checked = true
 
-                if (contato.sexo === 'M') {
-                    var radioM = document.getElementById('option-1');
-                    radioM.checked = true
-                    var radioF = document.getElementById('option-2');
-                    radioF.checked = false
-                } else if (contato.sexo === 'F') {
-                    var radioM = document.getElementById('option-1');
-                    radioM.checked = false;
-                    var radioF = document.getElementById('option-2');
-                    radioF.checked = true
+            }
 
+            removerInputTelefone()
+
+            hidratarTelefone(0, contato)
+            if (contato.telefone.length > 1) {
+                for (var indice = 1; indice < contato.telefone.length; indice++) {
+                    var idTelefone = criarInputTelefone()
+                    criarBotaoRemover(idTelefone)
+                    hidratarTelefone(indice, contato)
                 }
+            }
 
-                removerInputTelefone()
-
-                hidratarTelefone(0, contato)
-                if (contato.telefone.length > 1) {
-                    for (var indice = 1; indice < contato.telefone.length; indice++) {
-                        var idTelefone = criarInputTelefone()
-                        criarBotaoRemover(idTelefone)
-                        hidratarTelefone(indice, contato)
-                    }
-                }
-
-                $("#municipiosCadastro").val(contato.municipio).trigger('change');
-                document.getElementById('email-ctt').value = contato.email;
-                document.getElementById('obs-ctt').value = contato.observacao;
-            })
-        }
-
-    }
-
-
-
-    $(document).on('click', '#btn-salvar', function(e) {
-        e.preventDefault();
-        var formulario = new Formulario;
-        formulario.salvar();
-    });
-
-    $(document).on('click', '#btn-excluir', function(e) {
-        e.preventDefault();
-        resultado = window.confirm('Deseja realmente excluir o contato?');
-        if (resultado == true) {
-            var idContato = document.getElementById('id-contato').value
-            var status = document.getElementById('statusExcluido').value
-            console.log(status)
-            let formulario = new Formulario;
-            formulario.excluir(idContato, status)
-
-
-            // let contatomodel = new ContatoModel;
-            // contatomodel.excluir(idContato);
-        }
-    });
-
-function gerarContatos() {
-    let nome = gerarNomeAleatorio()
-
-    let contatoGerado = new Contato(
-        nome, 'M', gerarNumero(), gerarEmail(nome), getMunicipios(), gerarObservação()
-    );
-
-    console.log(nome);
-    let modelContato = new ContatoModel;
-    modelContato.adicionar(contatoGerado);
-
-}
-
-function gerarNomeAleatorio() {
-
-    let quantidadeDeSilabas = getRandomIntInclusive(2, 3);
-    let nome = "";
-
-    for (contadorSilaba = 1; contadorSilaba <= quantidadeDeSilabas; contadorSilaba++) {
-
-        nome = nome + getConsoanteAleatoria() + getVogalAleatoria();
-
-    };
-
-    return nome;
-};
-
-function getRandomIntInclusive(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-function getVogalAleatoria() {
-
-    let listaVogais = "AEOIU";
-    let numeroAleatorio = getRandomIntInclusive(1, 5);
-
-    return listaVogais.substring(numeroAleatorio - 1, numeroAleatorio);
-
-};
-
-function getConsoanteAleatoria() {
-
-    let listaConsoantes = "BCDFGHJKLMNPQRSTWVXYZ";
-    let numeroAleatorio = getRandomIntInclusive(1, 21);
-
-    return listaConsoantes.substring(numeroAleatorio - 1, numeroAleatorio);
-
-};
-
-function gerarNumero() {
-    let numero = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-    let telefone = ''
-    for (var i = 0; i < 11; i++) {
-        telefone += numero[Math.floor(Math.random() * 9)];
-    }
-
-    return telefone
-};
-
-function gerarEmail(nome) {
-    let dominios = ['@gmail.com', '@outlook.com', '@icsgo.com.br']
-    let email = nome + Math.random().toString() + dominios[Math.floor(Math.random() * dominios.length)];
-
-    return email
-};
-
-
-function getIbge() {
-    let codigosIbge = []
-
-    cidadesBanco.forEach(function (municipio, indice) {
-
-        codigosIbge[indice] = municipio.codigoIbge
-
-    })
-
-    return codigosIbge
-}
-
-function getMunicipios() {
-    var codigoIbge = getIbge()
-    let codigo = codigoIbge[Math.floor(Math.random() * codigoIbge.length)]
-    return codigo
-};
-
-
-function gerarObservação() {
-    let observacao = gerarNomeAleatorio().toLowerCase()
-
-    return observacao
-}
-
-function forContatos() {
-    for (let i = 0; i < 20; i++) {
-        gerarContatos()
+            $("#municipiosCadastro").val(contato.municipio).trigger('change');
+            document.getElementById('email-ctt').value = contato.email;
+            document.getElementById('obs-ctt').value = contato.observacao;
+        })
     }
 }
+
+$(document).on('click', '#btn-salvar', function (e) {
+    e.preventDefault();
+    var formulario = new Formulario;
+    formulario.salvar();
+});
+
+$(document).on('click', '#btn-excluir', function (e) {
+    e.preventDefault();
+    resultado = window.confirm('Deseja realmente excluir o contato?');
+    if (resultado == true) {
+        var idContato = document.getElementById('id-contato').value
+        var status = document.getElementById('statusExcluido').value
+        console.log(status)
+        let formulario = new Formulario;
+        formulario.excluir(idContato, status)
+    }
+});
+
 
 
 

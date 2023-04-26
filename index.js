@@ -33,9 +33,7 @@ $("body").on('click', '.navegacao', function () {
 
 function carregarPagina(argumentos) {
 	$('.telefone').mask('(99) 99999-999?9');
-
 	if (argumentos.rota === 'home') {
-
 		var homeMain = document.getElementById("homeMain");
 		homeMain.style.display = 'flex';
 		var cadastroMain = document.getElementById('cadastroMain');
@@ -48,10 +46,8 @@ function carregarPagina(argumentos) {
 		if (typeof home[argumentos.callback] === 'function') {
 			home.listarContatos();
 		}
-
 	}
 	else if (argumentos.rota === 'cadastro') {
-
 		var cadastroMain = document.getElementById("cadastroMain");
 		cadastroMain.style.display = 'flex';
 		var homeMain = document.getElementById("homeMain");
@@ -72,7 +68,6 @@ function carregarPagina(argumentos) {
 }
 
 $(document).on('click', '#button-home--cadastro', function () {
-
 	var cadastroMain = document.getElementById("cadastroMain");
 	cadastroMain.style.display = 'flex';
 	var homeMain = document.getElementById("homeMain");
@@ -83,12 +78,9 @@ $(document).on('click', '#button-home--cadastro', function () {
 	let formulario = new Formulario();
 	formulario.povoarSelectMunicipio();
 	limpar()
-
 })
 
-
 $(document).on('click', '#button-cadastro--home', function () {
-
 	var homeMain = document.getElementById("homeMain");
 	homeMain.style.display = 'flex';
 	var cadastroMain = document.getElementById('cadastroMain');
@@ -101,7 +93,6 @@ $(document).on('click', '#button-cadastro--home', function () {
 	if (typeof home[argumentos.callback] === 'function') {
 		home.listarContatos();
 	}
-
 })
 
 $(document).on('click', '#button-erros', function () {
@@ -114,10 +105,12 @@ $(document).on('click', '#button-erros', function () {
 })
 
 $(document).on('click', '#btn-sincronizar', function (){
-	teste22();
+	salvarContatosDB()
+	deletarContatosDB()
 })
 
 carregarInconsistencias(false)
+
 function carregarInconsistencias(erros) {
 	if (erros === false) {
 		var inconsistenciaMain = document.getElementById('button-erros');

@@ -54,7 +54,7 @@ class Home {
                     p4.innerHTML = '(' + ddd + ') ' + numeroParteUm + "-" + numeroParteDois;
                 }
 
-                if (contato.statusExcluido === true) {
+                if (contato.status === 'excluido') {
                     li.setAttribute('class', 'li-block')
                     p2.setAttribute('class', 'nome-excluido mnc-ctt-nome')
                     p3.setAttribute('class', 'cidade-excluido mnc-ctt')

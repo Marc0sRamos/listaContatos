@@ -10,14 +10,9 @@ class Cidade
 		$sql = "SELECT * FROM cidade";
 		$cidades = select($pdo, $sql);
 		return	json_encode($cidades);
-		// var_dump(json_encode($cidades));
-
-		// $cidadesJson = json_encode($cidades);
-		// return $cidadesJson;
 	}
 
 }
 
-// die('aqui');
 $teste = new Cidade;
 echo $teste->getCidade($pdo);
