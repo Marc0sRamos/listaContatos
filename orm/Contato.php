@@ -2,6 +2,7 @@
 include './ContatoValidacao.php';
 include './ContatoFilter.php';
 
+
 // Verificar o tipo de operação passada na requisição
 if (isset($_POST['operacao']) && ($_POST['operacao']) === 'deleteContato') {
     $idContato = $_POST['idContato'];
@@ -34,11 +35,10 @@ class Contato
             $this->pdo->beginTransaction();
 
             foreach ($codigoContato as $idContato) {
-                // Verificar se o codigo a ser excluído existe na tabela
+
                 $sqlSelectID = "SELECT id_contato FROM contato WHERE id_contato = '{$idContato}'";
                 $selectID = $this->pdo->query($sqlSelectID);
 
-                // Se o código a ser excluído existir, realiza a exclusão
                 $sqlDelete = "DELETE FROM contato WHERE id_contato = '{$idContato}'";
                 $delete = $this->pdo->exec($sqlDelete);
             }
@@ -68,6 +68,7 @@ class Contato
             $this->pdo->beginTransaction();
 
             foreach ($contatos as $contato) {
+                
                 $contatoFilter = new ContatoFilter();
                 $contato->email = $contatoFilter->filtrarEmail($contato->email);
                 $contato->nome = $contatoFilter->filtrarNome($contato->nome);
@@ -82,19 +83,16 @@ class Contato
                     $contato->observacao = 'NULL';
                 }
 
-                // Verificar se o codigo existe na tabela
                 $sqlSelectID = "SELECT id_contato FROM contato WHERE id_contato = '{$contato->codigoContato}'";
                 $selectID = $this->pdo->query($sqlSelectID);
 
                 if ($selectID->rowCount() > 0) {
-                    // Caso exista, será realizado o update       
                     $sqlUptade = "UPDATE contato 
                                   SET id_contato = '$contato->codigoContato', email = '$contato->email', nome = '$contato->nome' , observacao = '$contato->observacao', sexo = '$contato->sexo', data_ultima_sincronizacao = 'now()', data_insert = '$contato->dataInsert', id_usuario_ultima_sincronizacao = $contato->id_usuario_ultima_sincronizacao, id_usuario_insert = $contato->idUsuarioInsert
                                   WHERE id_contato = '{$contato->codigoContato}'";
 
                     $update = $this->pdo->exec($sqlUptade);
                 } else {
-                    // Caso não exista será realizado o insert
                     $sql = "INSERT INTO contato (id_contato,email,nome,observacao,sexo,                     data_ultima_sincronizacao,data_insert,id_usuario_ultima_sincronizacao,id_usuario_insert)       
                                 VALUES ('$contato->codigoContato', '$contato->email', '$contato->nome', 
                                 '$contato->observacao', '$contato->sexo', 'now()', '$contato->dataInsert', '$contato->id_usuario_ultima_sincronizacao', '$contato->idUsuarioInsert')";
