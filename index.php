@@ -11,11 +11,12 @@
 	<link rel="stylesheet" href="index.css">
 	<link rel="stylesheet" href="/cadastros/cadastro/cadastro.css">
 	<link rel="stylesheet" href="/cadastros/home/home.css">
+	<link rel="stylesheet" href="/cadastros/login/login.css">
+	<link href="lib/css/select2.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="/cadastros/inconsistencia/erros.css">
 	<script src="/cadastros/lib/jquery-3.6.1.min.js"></script>
 	<script src="/cadastros/lib/jquery-maskedinput/src/jquery.maskedinput.js"></script>
 	<script src="/cadastros/mdl/material.js"></script>
-	<link href="lib/css/select2.min.css" rel="stylesheet" />
 	<script src="lib/js/select2.min.js"></script>
 	<script src="lib/js/pt-BR.js"></script>
 	<script src="lib/funcoes.js"></script>
@@ -101,7 +102,7 @@
 
 </body>
 <script src="index.js"></script>
-
+<script src="login/login.js"></script>
 <script src="lib/funcoes.js"></script>
 <script src="cadastro/contatoModel.js"></script>
 <script src="cadastro/cadastro.js"></script>

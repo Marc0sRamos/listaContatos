@@ -10,10 +10,6 @@ const rotas = {
 	]
 };
 
-const usuario = {
-	"codigo": 22671,
-	"nome": "Marcos Tulio",
-};
 
 $(document).ready(function () {
 	getMunicipiosAjax()
@@ -30,7 +26,7 @@ $("body").on('click', '.navegacao', function () {
 	}
 	carregarPagina(argumentos);
 });
-
+// ARmazenar o id do usuario logado e armazenar no local e verificar se dois usuarios estarão logados 
 function carregarPagina(argumentos) {
 	$('.telefone').mask('(99) 99999-999?9');
 	if (argumentos.rota === 'home') {
@@ -115,7 +111,7 @@ function carregarInconsistencias(erros) {
 	if (erros === false) {
 		var inconsistenciaMain = document.getElementById('button-erros');
 		inconsistenciaMain.style.display = 'none';
-	}else {
+	} else {
 		var inconsistenciaMain = document.getElementById('button-erros');
 		inconsistenciaMain.style.display = 'flex';
 	}

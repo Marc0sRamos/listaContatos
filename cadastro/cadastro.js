@@ -22,7 +22,7 @@ class Contato {
         this.municipio = municipio;
         this.observacao = observacao;
         this.codigoContato = codigoContato;
-        this.idUsuarioInsert = usuario.codigo;
+        this.idUsuarioInsert = id_usuario.codigo;
         this.dataInsert = Date.now();
         this.status = excluido;
     }
@@ -224,6 +224,7 @@ class Formulario {
 
 $(document).on('click', '#btn-salvar', function (e) {
     e.preventDefault();
+
     var formulario = new Formulario;
     formulario.salvar();
 });

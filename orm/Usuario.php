@@ -1,4 +1,8 @@
 <?php
+$dados = $_POST['dados'];
+$validarUsuario = new Usuario($pdo);
+$validarUsuario->validarLogin($dados);
+
 
 class Usuario
 {
@@ -9,26 +13,44 @@ class Usuario
         $this->pdo = include './conection.php';
     }
 
-    public function validarLogin($login, $senha)
+    public function validarLogin($dados)
     {
-        // Conectar ao banco de dados
-        $conn = new PDO("mysql:host=localhost;dbname=nomeDoBanco", "usuario", "senha");
+        $response = ['erro' => false, 'mensagem' => '', 'dados' => []];
 
-        // Preparar a consulta SQL
-        $stmt = $conn->prepare("SELECT * FROM login WHERE login = :login");
-        $stmt->bindParam(':login', $login);
+        try {
+            $this->pdo->beginTransaction();
 
-        // Executar a consulta
-        $stmt->execute();
+            $usuarioLogin = $dados['nomeUsuario'];
+            $sqlSelectLogin = "SELECT login FROM login WHERE login = '$usuarioLogin'";
+            $selectLogin = $this->pdo->query($sqlSelectLogin);
 
-        // Verificar se o login existe e se a senha está correta
-        $row = $stmt->fetch();
-        if ($row && password_verify($senha, $row['senha'])) {
-            // Login válido, retornar o ID do usuário
-            return $row['id_usuario'];
-        } else {
-            // Login inválido
-            return false;
+            if ($selectLogin->rowCount() < 1) {
+                $response ['mensagem'] = 'Usuario invalido!';
+                throw new Exception('Erro capturado');
+            }
+
+            $senha = md5($dados['senha']);
+            $sqlSelectSenha = "SELECT senha FROM login WHERE senha = '$senha'";
+            $selectSenha = $this->pdo->query($sqlSelectSenha);
+
+            if ($selectSenha->rowCount() < 1) {
+                $response ['mensagem'] = 'Senha invalida!';
+                throw new Exception('erro capturado');                
+            }
+
+            $sqlSelectID = "SELECT id_usuario FROM login WHERE login = '$usuarioLogin'";
+            $selectId = $this->pdo->query($sqlSelectID);
+            $resultSelectId = $selectId->FetchAll(PDO::FETCH_ASSOC);
+            $response['dados'] = $resultSelectId[0];
+
+            $this->pdo->commit();
+
+        } catch (Exception $e) {
+            $this->pdo->rollback();
+            $response['erro'] = true;
         }
+
+        $json = json_encode($response);
+        echo $json;
     }
 }

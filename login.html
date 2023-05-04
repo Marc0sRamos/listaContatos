@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-orange.min.css" />
+    <link rel="stylesheet" href="login/login.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="lib/jquery-3.6.1.min.js"></script>
+    <script src="login/login.js"></script>
+    <script src="/cadastros/lib/funcoes.js"></script>
+    <script src="/cadastros/index.js"></script>
+    <title>login</title>
+</head>
+
+<body>
+    <div class="mdl-grid">
+        <div class="img-login mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+            <img id="imagem-login" src="/cadastros/imagens/login-illustrator.png" alt="">
+        </div>
+        <div class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
+            <div class="form-login">
+                <form action="#">
+                    <img class="logo-login" src="/cadastros/imagens/logo-ics.png" alt="">
+                    <div class="container-form">
+                        <p id="texto-login">Acesse sua conta</p>
+                        <div class="campos-form">
+                            <i id="icone-email" class="material-icons icones-login">person</i>
+                            <div class="form-email mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="text" id="email-login" name="email">
+                                <label class="mdl-textfield__label" for="email-login">Usuário</label>
+                            </div>
+                            <br>
+                            <i id="icone-senha" class="material-icons icones-login">lock</i>
+                            <div class="form-senha mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                <input class="mdl-textfield__input" type="password" id="senha-login" name="senha">
+                                <label class="mdl-textfield__label" for="senha-login">Senha</label>
+                            </div>
+                            <br>
+                            <a id="rec-senha" href="">Esqueceu sua senha?</a>
+                            <div class="btn-loguin">
+                                <button id="btn-acessar"
+                                    class="btn-form mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+                                    id-botao-salvar type="submit">
+                                    ACESSAR
+                                </button>
+                            </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

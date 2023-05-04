@@ -21,6 +21,11 @@
   flex-direction: column;
 }
 
+/* .form-senha {
+  display: flex;
+  flex-direction: row;
+} */
+
 .form-login {
   width: 400px;
   display: flex;
@@ -29,7 +34,6 @@
 }
 
 .mdl-textfield {
-  margin-top: 10px;
   margin-bottom: 10px;
   margin-left: 5px;
 }
@@ -41,14 +45,18 @@
 }
 
 #btn-acessar {
-  margin-top: 50px;
-  width: 410px;
+  margin-top: 30px;
+  width: 380px;
   height: 50px;
   background-color: #F78B60;
   color: #FEF1EC;
 }
 
-.material-icons {
+.campos-form {
+  margin-left: 25px !important;
+}
+
+.icones-login {
   color: #192C6F;
   position: relative;
   top: 9px;
