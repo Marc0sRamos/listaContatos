@@ -68,7 +68,7 @@ class ContatoModel {
                             console.log(err)
                         }
                     }
-                    
+
                 })
             })
     }
@@ -172,6 +172,19 @@ class ContatoModel {
             }
         })
     }
+
+    insertcontatosDB(contatos) {
+        contatos.forEach(function (contato) {
+
+            validarObservacao(contato);
+
+            var contatoDB = new Contato(contato.nome, contato.sexo, contato.telefone, contato.email, contato.municipio, contato.observacao, contato.id_contato, contato.id_usuario_insert, contato.data_insert, contato.status)
+
+            let modelContato = new ContatoModel;
+            modelContato.adicionar(contatoDB);
+        })
+    }
+
 }
 
 function getContato(codigo) {
@@ -197,7 +210,11 @@ function getContato(codigo) {
     })
 }
 
-
+function validarObservacao(contato) {
+    if (typeof(contato.observacao) !== String || contato.observacao.length <= 0) {
+        contato.observacao = ''
+    }
+}
 
 
 

@@ -14,7 +14,7 @@ $('body #main').on("click", ".remove", function (e) {
 
 class Contato {
 
-    constructor(nome, sexo, telefone, email, municipio, observacao, codigoContato, excluido) {
+    constructor(nome, sexo, telefone, email, municipio, observacao, codigoContato, idUsuario, dataInsert, status) {
         this.nome = nome;
         this.sexo = sexo;
         this.telefone = telefone;
@@ -22,10 +22,18 @@ class Contato {
         this.municipio = municipio;
         this.observacao = observacao;
         this.codigoContato = codigoContato;
-        this.idUsuarioInsert = id_usuario.codigo;
-        this.dataInsert = Date.now();
-        this.status = excluido;
+
+        this.idUsuarioInsert = idUsuario
+
+        if (this.dataInsert === undefined) {
+            this.dataInsert = Date.now()
+        } else {
+            this.dataInsert = dataInsert
+        }
+        
+        this.status = 'ativo'
     }
+
 }
 
 class Formulario {
@@ -74,9 +82,11 @@ class Formulario {
             codigoContato = uuidv4()
         }
 
-        let excluido = document.getElementById('statusExcluido').value = 'ativo'
+        let status = document.getElementById('statusExcluido').value = 'ativo'
+    
+        let idUsuario = localStorage.getItem('id_usuario');
 
-        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato, excluido);
+        this.contato = new Contato(nome, sexo, telefone, email, municipio, observacao, codigoContato, idUsuario, status);
 
     };
 
@@ -188,7 +198,8 @@ class Formulario {
 
         contatoEdit = getContato(idContato).then((contato) => {
             document.getElementById('id-contato').value = contato.codigoContato;
-            document.getElementById('statusExcluido').value = contato.excluido
+            document.getElementById('statusExcluido').value = contato.status
+            document.getElementById('id-usuario').value = contato.idUsuarioInsert
             document.getElementById('nome-ctt').value = contato.nome;
 
             if (contato.sexo === 'M') {
@@ -235,9 +246,15 @@ $(document).on('click', '#btn-excluir', function (e) {
     if (resultado == true) {
         var idContato = document.getElementById('id-contato').value
         var status = document.getElementById('statusExcluido').value
-        console.log(status)
-        let formulario = new Formulario;
-        formulario.excluir(idContato, status)
+        let idUsuario = document.getElementById('id-usuario').value
+        let idDB = localStorage.getItem('id_usuario')
+        if (idUsuario === idDB){
+            let formulario = new Formulario;
+            formulario.excluir(idContato, status)
+        }else {
+            exibirMensagemSucesso('Apenas o usuário que realizou o cadastro do contato tem permissão para excluí-lo.')
+        }
+   
     }
 });
 

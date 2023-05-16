@@ -83,8 +83,7 @@ class ContatoValidacao
 
     function validarId($idContato): bool
     {
-        var_dump(($idContato));
-        if ($idContato > 0 && $idContato <  32768) {
+        if ($idContato > 0 && $idContato <  3299768) {
             return true;
         } else {
             return false;
@@ -126,11 +125,11 @@ class ContatoValidacao
             }
 
             if ($this->validarId($contato->idUsuarioInsert) === false) {
-                throw new Exception('O ID do usuario que realizou o insert é invalido');
+                throw new Exception('O ID do usuario que realizou o insert do contato "' . $contato->nome. '" é invalido');
             }
 
             if ($this->validarId($contato->id_usuario_ultima_sincronizacao) === false) {
-                throw new Exception('O ID do usuario é invalido');
+                throw new Exception('O ID do usuario que realizou a ultima sincronização é invalido');
             }
 
             if ($this->validarData($contato->dataInsert) === false) {

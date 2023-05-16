@@ -26,7 +26,7 @@ $("body").on('click', '.navegacao', function () {
 	}
 	carregarPagina(argumentos);
 });
-// ARmazenar o id do usuario logado e armazenar no local e verificar se dois usuarios estarão logados 
+
 function carregarPagina(argumentos) {
 	$('.telefone').mask('(99) 99999-999?9');
 	if (argumentos.rota === 'home') {
@@ -100,9 +100,10 @@ $(document).on('click', '#button-erros', function () {
 	inconsistenciaMain.style.display = 'flex';
 })
 
-$(document).on('click', '#btn-sincronizar', function (){
-	salvarContatosDB()
+$(document).on('click', '#btn-sincronizar', function () {
+	getContatosDB()
 	deletarContatosDB()
+	salvarContatosDB()
 })
 
 carregarInconsistencias(false)

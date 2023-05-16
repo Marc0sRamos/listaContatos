@@ -25,7 +25,7 @@ class Usuario
             $selectLogin = $this->pdo->query($sqlSelectLogin);
 
             if ($selectLogin->rowCount() < 1) {
-                $response ['mensagem'] = 'Usuario invalido!';
+                $response['mensagem'] = 'Login invalido!';
                 throw new Exception('Erro capturado');
             }
 
@@ -42,8 +42,6 @@ class Usuario
             $selectId = $this->pdo->query($sqlSelectID);
             $resultSelectId = $selectId->FetchAll(PDO::FETCH_ASSOC);
             $response['dados'] = $resultSelectId[0];
-
-            $this->pdo->commit();
 
         } catch (Exception $e) {
             $this->pdo->rollback();
