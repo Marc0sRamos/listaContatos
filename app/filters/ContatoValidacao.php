@@ -35,6 +35,7 @@ class ContatoValidacao
              * @link http://esusab.github.io/integracao/ledi/regras/validar_nome.html Validação de nome PIX/PDQ
              *  'NULL';
              */
+            
             $nome = mb_strtoupper(utf8_decode($nomeContato), 'ISO-8859-1');
             preg_match_all('/[^A-ZÁÉÍÓÚÂÊÎÔÛÃÕÑÄËÏÖÜKWYÝÇ\s\']+/i', $nome, $matches, PREG_SET_ORDER, 0);
             if (!empty($matches[0])) {

@@ -1,5 +1,8 @@
 <?php
-include './ContatoFilter.php';
+
+// spl_autoload_register(function ($class) {
+//     include '/cadastros/app/model' . $class . '.class.php';
+// });
 
 class ContatoModel
 {
@@ -7,7 +10,7 @@ class ContatoModel
 
     function __construct()
     {
-        $this->pdo = include './conection.php';
+        $this->pdo = connect();
     }
 
     public function getContatosDB()
@@ -19,6 +22,7 @@ class ContatoModel
 
         $sqlSelect = $this->pdo->query($sqlSelectGet);
         $resultSelect = $sqlSelect->FetchAll(PDO::FETCH_ASSOC);
+        
 
         return $resultSelect;
     }
@@ -54,6 +58,7 @@ class ContatoModel
     {
         $sqlSelectID = "SELECT id_contato FROM contato WHERE id_contato = '{$idContato}'";
         $selectID = $this->pdo->query($sqlSelectID);
+        $resultSelectID = $selectID->Fetch(PDO::FETCH_ASSOC);
         return $selectID;
     }
 
@@ -67,7 +72,7 @@ class ContatoModel
         return $update;
     }
 
-    public function insert(stdClass $contato)
+    public function inserir(stdClass $contato)
     {
         $sql = "INSERT INTO contato (id_contato,email,nome,municipio,observacao,sexo,                       data_ultima_sincronizacao,data_insert,id_usuario_ultima_sincronizacao,id_usuario_insert)       
                     VALUES ('$contato->codigoContato', '$contato->email', '$contato->nome', '$contato->municipio','$contato->observacao', '$contato->sexo', 'now()', '$contato->dataInsert', '$contato->id_usuario_ultima_sincronizacao', '$contato->idUsuarioInsert')";
@@ -80,7 +85,6 @@ class ContatoModel
     public function salvar(array $contatos)
     {
         $contatoValidacao = new ContatoValidacao();
-        $erro = false;
         $response = ['erro' => false, 'mensagem' => '', 'dados' => []];
 
         try {
@@ -94,23 +98,23 @@ class ContatoModel
                     if ($this->atualizar($contato) === false) {
                         throw new Exception('Não foi possivel realizar a atualização do contato');
                     }
-                } else {
-                    if ($this->insert($contato) === false) {
-                        throw new Exception('Não foi possivel inserir o contato na base de dados');
-                    }
+                } elseif ($this->inserir($contato) === false) {
+                    throw new Exception('Não foi possivel inserir o contato na base de dados');
                 }
 
                 $telefoneModel = new TelefoneModel;
                 $telefoneModel->excluir($contato);
 
+
                 foreach ($contato->telefone as $key => $telefone) {
-                    $telefoneModel->insert($contato, $telefone);
+                    if ($telefoneModel->insert($contato, $telefone) === false) {
+                        throw new Exception('Não foi possivel inserir o telefone na base de dados');
+                    }
                 }
             }
 
             $this->pdo->commit();
             $response['mensagem'] = 'Sucesso!';
-            
         } catch (Exception $e) {
             $this->pdo->rollback();
             $response['erro'] = true;

@@ -17,8 +17,8 @@ function acessarSistema(dados) {
   return new Promise((resolve, reject) => {
 
     jQuery.ajax({
-      url: '/cadastros/orm/Usuario.php',
-      data: { 'modulo': 'Usuario', 'operacao': 'validarLogin', 'dados': dados },
+      url: '/cadastros/ajax.php',
+      data: { 'modulo': 'usuario', 'operacao': 'validarLogin', 'dados': dados },
       type: 'POST',
       async: true,
       dataType: 'json',

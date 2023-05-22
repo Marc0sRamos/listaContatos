@@ -1,16 +1,13 @@
 <?php
-$dados = $_POST['dados'];
-$validarUsuario = new Usuario($pdo);
-$validarUsuario->validarLogin($dados);
-
 
 class Usuario
 {
     private $pdo;
 
-    function __construct($pdo)
+    function __construct()
     {
-        $this->pdo = include './conection.php';
+        $this->pdo = connect();
+
     }
 
     public function validarLogin($dados)

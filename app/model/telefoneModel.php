@@ -1,4 +1,6 @@
 <?php
+include '/var/www/html/cadastros/config/conection.php';
+
 
 class TelefoneModel
 {
@@ -6,7 +8,7 @@ class TelefoneModel
 
     function __construct()
     {
-        $this->pdo = include './conection.php';
+        $this->pdo = connect();
     }
 
     // método somente para excluir na classe TelefoneModel
