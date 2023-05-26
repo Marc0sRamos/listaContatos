@@ -1,8 +1,7 @@
 
 var id_usuario = {
-	"codigo": localStorage.getItem('id_usuario')
+  "codigo": localStorage.getItem('id_usuario')
 };
-// console.log(usuario.codigo)
 
 $(document).on('click', '#btn-acessar', function (e) {
   e.preventDefault();
@@ -14,26 +13,33 @@ $(document).on('click', '#btn-acessar', function (e) {
 })
 
 function acessarSistema(dados) {
-  return new Promise((resolve, reject) => {
+  jQuery.ajax({
+    url: '/cadastros/ajax.php',
+    data: { 'modulo': 'usuario', 'operacao': 'validarLogin', 'dados': dados },
+    type: 'POST',
+    async: true,
+    dataType: 'json',
 
-    jQuery.ajax({
-      url: '/cadastros/ajax.php',
-      data: { 'modulo': 'usuario', 'operacao': 'validarLogin', 'dados': dados },
-      type: 'POST',
-      async: true,
-      dataType: 'json',
+    success: function (response) {
 
-      success: function (response) {
-        if (response.erro === false) {
-          resolve('Acesso liberado');
-          localStorage.setItem('id_usuario', response.dados['id_usuario']);
-          window.location.href = '/cadastros'
-        } else {
-          console.log('erro');
-          getErrosLogin(response)
-          reject(response);
-        }
-      },
-    });
-  })
+      if (response.erro === true) {
+        erroLogin('Usuario ou senha invalido');
+        return;
+      }
+
+      localStorage.setItem('id_usuario', response.dados['id_usuario']);
+      window.location.href = '/cadastros'
+    },
+  });
+}
+
+function erroLogin(mensagem) {
+  var dialog = document.getElementById('dialog');
+  dialog.showModal();
+
+  document.querySelector('#mensagem-erro2').textContent = (mensagem);
+
+  dialog.querySelector('.close').addEventListener('click', function () {
+    dialog.close();
+  });
 }

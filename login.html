@@ -12,12 +12,23 @@
     <script src="lib/jquery-3.6.1.min.js"></script>
     <script src="login/login.js"></script>
     <script src="/cadastros/lib/funcoes.js"></script>
-    <script src="/cadastros/index.js"></script>
     <title>login</title>
 </head>
 
 <body>
+    <dialog class="mdl-dialog" id="dialog">
+        <h4 class="mdl-dialog__title">
+        </h4>
+        <div class="mdl-dialog__content">
+            <p id="mensagem-erro2"></p>
+        </div>
+        <div class="mdl-dialog__actions">
+            <button type="button" class="mdl-button close" id="btn-avancar">OK</button>
+        </div>
+    </dialog>
+    
     <div class="mdl-grid">
+        
         <div class="img-login mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet">
             <img id="imagem-login" src="/cadastros/imagens/login-illustrator.png" alt="">
         </div>

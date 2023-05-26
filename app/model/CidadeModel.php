@@ -1,14 +1,7 @@
 <?php
 
-class CidadeModel
+class CidadeModel extends Model
 {
-    private $pdo;
-
-    function __construct()
-    {
-        $this->pdo = connect();
-    }
-
     public function getCidadeALL()
     {
         $sql = "SELECT * FROM cidade";

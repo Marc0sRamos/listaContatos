@@ -1,24 +1,13 @@
 <?php
-include '/var/www/html/cadastros/config/conection.php';
 
-
-class TelefoneModel
+class TelefoneModel extends Model
 {
-    private $pdo;
-
-    function __construct()
-    {
-        $this->pdo = connect();
-    }
-
-    // método somente para excluir na classe TelefoneModel
     public function excluir($contato)
     {
         $sqlDeleteTelefone = "DELETE FROM telefone WHERE id_contato_fk = '{$contato->codigoContato}'";
         $this->pdo->exec($sqlDeleteTelefone);
     }
 
-    // método somente para inserir telefone na classe TelefoneModel
     public function insert($contato, $telefone)
     {
         $sqlInsertTelefone = "INSERT INTO telefone (id_contato_fk, telefone)

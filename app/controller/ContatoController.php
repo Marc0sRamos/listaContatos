@@ -1,28 +1,12 @@
 <?php
 
 
-// if (isset($_POST['operacao']) && ($_POST['operacao']) === 'deleteContato') {
-//     $idContato = $_POST['idContato'];
-//     $contato = new ContatoModel($pdo);
-//     $contato->deleteContato($idContato);
-// } 
-// else if (isset($_POST['operacao']) && ($_POST['operacao']) === 'insertContato') { // salvar
-//     $contatos = json_decode($_POST['contatos']);
-//     salvar($contatos);
-// } 
-// else if ($_POST['operacao'] === 'getcontatosDB') {
-//     listarContatosGet($contatoDB);
-// } 
-// else {
-//     echo "Nenhum parâmetro válido foi passado na requisição";
-// }
 class ContatoController 
 {
 
-    public function listarContatosGet($contatoDB)
+    public function getcontatoDB()
     {
-        $response = ['erro' => false, 'mensagem' => '', 'dados' => []];
-    
+
         $contatoDB = $_POST['contatoDB'];
         $getContatos = new ContatoModel();
         $contatosteste = $getContatos->getContatosDB($contatoDB);
@@ -36,11 +20,11 @@ class ContatoController
         echo $json;
     }
       
-    public function salvar($contatos)
+    public function salvar()
     {
-    
         $contatoValidacao = new ContatoValidacao();
-    
+        $contatos = json_decode($_POST['contatos']);
+
         foreach ($contatos as $contato) {
             $contatoFilter = new ContatoFilter();
             $contato->email = $contatoFilter->filtrarEmail($contato->email);
@@ -59,6 +43,13 @@ class ContatoController
     
         $salvar = new ContatoModel();
         $salvar->salvar($contatos);
+    }
+
+    public function excluir()
+    {
+        $idContato = $_POST['idContato'];
+        $contato = new ContatoModel();
+        $contato->deleteContato($idContato);
     }
 }
 

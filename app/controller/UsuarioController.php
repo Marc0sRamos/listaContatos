@@ -1,51 +1,38 @@
 <?php
 
-class Usuario
+class UsuarioController
 {
     private $pdo;
 
-    function __construct()
+    public function __construct()
     {
         $this->pdo = connect();
 
     }
 
-    public function validarLogin($dados)
+    public function validarLogin()
     {
-        $response = ['erro' => false, 'mensagem' => '', 'dados' => []];
+        $dados = $_POST['dados'];
+        $response = new Response;
 
         try {
-            $this->pdo->beginTransaction();
 
+            $usuarioModel = new UsuarioModel;
             $usuarioLogin = $dados['nomeUsuario'];
-            $sqlSelectLogin = "SELECT login FROM login WHERE login = '$usuarioLogin'";
-            $selectLogin = $this->pdo->query($sqlSelectLogin);
-
-            if ($selectLogin->rowCount() < 1) {
-                $response['mensagem'] = 'Login invalido!';
-                throw new Exception('Erro capturado');
-            }
-
             $senha = md5($dados['senha']);
-            $sqlSelectSenha = "SELECT senha FROM login WHERE senha = '$senha'";
-            $selectSenha = $this->pdo->query($sqlSelectSenha);
+            $dadosUsuario = $usuarioModel->getByLoginSenha($usuarioLogin, $senha);
 
-            if ($selectSenha->rowCount() < 1) {
-                $response ['mensagem'] = 'Senha invalida!';
-                throw new Exception('erro capturado');                
+            if (empty($dadosUsuario)) {
+                throw new Exception("Usuario ou senha inválido");
             }
 
-            $sqlSelectID = "SELECT id_usuario FROM login WHERE login = '$usuarioLogin'";
-            $selectId = $this->pdo->query($sqlSelectID);
-            $resultSelectId = $selectId->FetchAll(PDO::FETCH_ASSOC);
-            $response['dados'] = $resultSelectId[0];
+            $response->setDados($dadosUsuario);
 
         } catch (Exception $e) {
-            $this->pdo->rollback();
-            $response['erro'] = true;
+            $response->setErro();
+            $response->setMensagem($e->getMessage());
         }
 
-        $json = json_encode($response);
-        echo $json;
+        $response->print();
     }
 }

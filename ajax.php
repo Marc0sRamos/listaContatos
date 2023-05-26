@@ -3,39 +3,28 @@
 include '/var/www/html/cadastros/config/conection.php';
 include '/var/www/html/cadastros/config/autoload.php';
 
-// montar nome da classe controlerr => ContatoController ($classeController)
-// montar o nome do arquivo app/controller/ContatoController.php
-// checar se o arquivo existe e se pode ser lido
-// Criar um objeto
+$classeController = $_POST['modulo'] . 'Controller';
+$classeController = ucfirst($classeController);
+$caminho = 'app/controller/' . $classeController . '.php';
+$metodo = $_POST['operacao'];
 
-$objController = new $classeController;
+// Duas classes para lidar com solicitação e resposta (Request e Response)
+// 
 
-// checar se o método existe dentro do objeto criado 
-// $metodo
-// Se método existe, então invoca (chamar)
+try {
+    if (is_readable($caminho) === false) {
+        throw new Exception('Modulo ' . $_POST['modulo'] . ' não existe.');
+    }
 
-$objController->$metodo();
+    $objController = new $classeController;
 
+    if (method_exists($objController, $metodo) === false) {
+        throw new Exception('Operacao ' . $metodo . ' não existe.');
+    }
 
-if (($_POST['modulo'] === 'contato' && ($_POST['operacao'] === 'deleteContato'))) {
-    $idContato = $_POST['idContato'];
-    $contato = new ContatoModel($pdo);
-    $contato->deleteContato($idContato);
-} elseif (($_POST['modulo'] === 'contato' && ($_POST['operacao'] === 'insertContato'))) {
-    $contatoSalvar = new ContatoController();
-    $contatos = json_decode($_POST['contatos']);
-    $contatoSalvar->salvar($contatos);
-} elseif (($_POST['modulo'] === 'contato' && ($_POST['operacao'] === 'getcontatoDB'))) {
-    $contatoGet = new ContatoController;
-    $contatoDB = $_POST['contatoDB'];
-    $contatoGet->listarContatosGet($contatoDB);
-} elseif (($_POST['modulo'] === 'cidade' && ($_POST['operacao'] === 'getCidade'))) {
-    $teste = new CidadeController;
-    $teste->getCidade();
-} elseif (($_POST['modulo'] === 'usuario' && ($_POST['operacao'] === 'validarLogin'))) {
-    $dados = $_POST['dados'];
-    $validarUsuario = new Usuario($pdo);
-    $validarUsuario->validarLogin($dados);
+    $objController->$metodo();
+
+} catch (Exception $e) {
+    $response = ['erro' => true, 'mensagem' => $e->getMessage()];
+    echo json_encode($response);
 }
-
-

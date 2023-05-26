@@ -1,18 +1,7 @@
 <?php
 
-// spl_autoload_register(function ($class) {
-//     include '/cadastros/app/model' . $class . '.class.php';
-// });
-
-class ContatoModel
+class ContatoModel extends Model
 {
-    private $pdo;
-
-    function __construct()
-    {
-        $this->pdo = connect();
-    }
-
     public function getContatosDB()
     {
         $sqlSelectGet = "SELECT c.*, string_agg(t.telefone, ',') as telefone 
