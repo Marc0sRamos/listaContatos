@@ -7,6 +7,5 @@ class CidadeController
 		$cidade = new CidadeModel();
 		echo json_encode($cidade->getCidadeALL());
 	}
-
 }
 

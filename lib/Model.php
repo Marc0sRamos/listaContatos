@@ -6,6 +6,7 @@ class Model
 
     function __construct()
     {
-        $this->pdo = connect();
+        $conection = new Connection;
+        $pdo = $conection->connect();
     }
 }

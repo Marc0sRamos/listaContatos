@@ -18,4 +18,3 @@ function connect(): PDO
         die($e->getMessage());
     }
 }
-

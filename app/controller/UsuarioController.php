@@ -2,21 +2,12 @@
 
 class UsuarioController
 {
-    private $pdo;
-
-    public function __construct()
-    {
-        $this->pdo = connect();
-
-    }
-
     public function validarLogin()
     {
         $dados = $_POST['dados'];
         $response = new Response;
 
         try {
-
             $usuarioModel = new UsuarioModel;
             $usuarioLogin = $dados['nomeUsuario'];
             $senha = md5($dados['senha']);
@@ -32,7 +23,6 @@ class UsuarioController
             $response->setErro();
             $response->setMensagem($e->getMessage());
         }
-
         $response->print();
     }
 }

@@ -6,18 +6,16 @@ class ContatoController
 
     public function getcontatoDB()
     {
-
-        $contatoDB = $_POST['contatoDB'];
+        $response = new Response;
         $getContatos = new ContatoModel();
-        $contatosteste = $getContatos->getContatosDB($contatoDB);
+        $contatosDB = $getContatos->getContatosDB();
     
-        foreach ($contatosteste as $key => $sql) {
-            $contatosteste[$key]['telefone'] = explode(',', $sql['telefone']);
+        foreach ($contatosDB as $key => $sql) {
+            $contatosDB[$key]['telefone'] = explode(',', $sql['telefone']);
         }
-        $response['dados'] = $contatosteste;
-    
-        $json = json_encode($response);
-        echo $json;
+        $response->setDados($contatosDB);    
+        
+        $response->print();
     }
       
     public function salvar()
@@ -27,18 +25,12 @@ class ContatoController
 
         foreach ($contatos as $contato) {
             $contatoFilter = new ContatoFilter();
-            $contato->email = $contatoFilter->filtrarEmail($contato->email);
-            $contato->nome = $contatoFilter->filtrarNome($contato->nome);
-            $contato->observacao = $contatoFilter->filtrarObs($contato->observacao);
+            $contatoFilter->filtrar($contato);
     
             if ($contatoValidacao->validarDados($contato) === false) {
-                $erro = true;
                 continue;
             }
-    
-            if ($contato->observacao === '') {
-                $contato->observacao = 'NULL';
-            }
+
         }
     
         $salvar = new ContatoModel();
@@ -47,9 +39,9 @@ class ContatoController
 
     public function excluir()
     {
-        $idContato = $_POST['idContato'];
+        $codigosContato = $_POST['CodigosContato'];
         $contato = new ContatoModel();
-        $contato->deleteContato($idContato);
+        $contato->deleteContato($codigosContato);
     }
 }
 

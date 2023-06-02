@@ -16,4 +16,11 @@ class ContatoFilter
     {
         return htmlspecialchars(trim($contatoObservacao));
     }
+
+    public function filtrar($contato)
+    {
+        $this->filtrarEmail($contato->email);
+        $this->filtrarNome($contato->nome);
+        $this->filtrarObs($contato->observacao);
+    }
 }
