@@ -22,13 +22,10 @@ class ContatoModel extends Model
             $this->pdo->beginTransaction();
 
             foreach ($codigoContato as $idContato) {
-
                 $sql = "DELETE FROM contato WHERE id_contato = '{$idContato}'";
-                $delete = $this->pdo->exec($sql);
-
+                $this->pdo->exec($sql);
                 $telefoneModel = new TelefoneModel;
-                $telefoneModel->excluir($codigoContato);
-
+                $telefoneModel->excluir($idContato);
             }
 
             $this->pdo->commit();
@@ -81,17 +78,12 @@ class ContatoModel extends Model
         $contatoValidacao = new ContatoValidacao();
         $response = new Response;
 
-        var_dump($this->pdo);
-        
         try {
             $this->pdo->beginTransaction();
 
             foreach ($contatos as $contato) {
 
                 $selectID = $this->get($contato->codigoContato);
-
-                // var_dump($selectID->rowCount());
-                // die;
 
                 if ($selectID->rowCount() <= 0) {
                     if (false === $result = $this->inserir($contato)) {
@@ -104,20 +96,12 @@ class ContatoModel extends Model
                 }
 
 
-                // if ($selectID->rowCount() > 0 && $this->atualizar($contato) === false) {
-                //     throw new Exception('Não foi possivel realizar a atualização do contato');
-                // } elseif (false === $result = $this->inserir($contato)) {
-                //     throw new Exception('Não foi possivel inserir o contato na base de dados');
-                // }
-
                 $telefoneModel = new TelefoneModel;
                 $telefoneModel->excluir($contato->codigoContato);
 
                 foreach ($contato->telefone as $key => $telefone) {
                     if ($telefoneModel->insert($contato->codigoContato, $telefone) === false) {
-                        var_dump($result);
-                        die;
-                        throw new Exception('Não foi possivel inserir o telefone na base de dados');
+                        throw new Exception("Não foi possivel inserir o telefone na base de dados");
                     }
                 }
             }

@@ -5,6 +5,7 @@ class TelefoneModel extends Model
     public function excluir($codigoContato)
     {
         $sqlDeleteTelefone = "DELETE FROM telefone WHERE id_contato_fk = '{$codigoContato}'";
+    
         $this->pdo->exec($sqlDeleteTelefone);
     }
 
@@ -12,9 +13,6 @@ class TelefoneModel extends Model
     {
         $sqlInsertTelefone = "INSERT INTO telefone (id_contato_fk, telefone)
         VALUES ('$codigoContato', '$telefone')";
-
-        var_dump($this->pdo);
-        die;
         
         return $this->pdo->exec($sqlInsertTelefone);
     }

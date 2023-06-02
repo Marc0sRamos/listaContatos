@@ -1,6 +1,6 @@
 <?php
 
-include '/var/www/html/cadastros/config/conection.php';
+include '/var/www/html/cadastros/lib/Connection.php';
 include '/var/www/html/cadastros/config/autoload.php';
 
 $classeController = $_POST['modulo'] . 'Controller';

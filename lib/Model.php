@@ -2,11 +2,11 @@
 
 class Model 
 {
-    protected $pdo;
+    protected  $pdo;
 
     function __construct()
     {
         $conection = new Connection;
-        $pdo = $conection->connect();
+        $this->pdo = $conection->connect();
     }
 }

@@ -23,6 +23,6 @@ class UsuarioController
             $response->setErro();
             $response->setMensagem($e->getMessage());
         }
-        $response->print();
+        $response->print($response);
     }
 }

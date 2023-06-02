@@ -10,7 +10,7 @@ class UsuarioModel extends Model
         $result = $this->pdo->query(
             "SELECT * FROM usuario WHERE login = '$login' AND senha = '$senha'"
         );
-    
+
         $usuario = $result->Fetch(PDO::FETCH_ASSOC);
         return $usuario;
     }
