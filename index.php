@@ -8,18 +8,18 @@
 	<link rel="shortcut icon" href="#">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-orange.min.css" />
-	<link rel="stylesheet" href="index.css">
-	<link rel="stylesheet" href="/cadastros/cadastro/cadastro.css">
-	<link rel="stylesheet" href="/cadastros/home/home.css">
-	<link rel="stylesheet" href="/cadastros/login/login.css">
+	<link rel="stylesheet" href="/cadastros/app/view/index/index.css">
+	<link rel="stylesheet" href="/cadastros/app/view/cadastro/cadastro.css">
+	<link rel="stylesheet" href="/cadastros/app/view/home/home.css">
+	<link rel="stylesheet" href="/cadastros/app/view/login/login.css">
 	<link href="lib/css/select2.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="/cadastros/inconsistencia/erros.css">
-	<script src="/cadastros/lib/jquery-3.6.1.min.js"></script>
+	<script src="/cadastros/lib/js/jquery-3.6.1.min.js"></script>
 	<script src="/cadastros/lib/jquery-maskedinput/src/jquery.maskedinput.js"></script>
 	<script src="/cadastros/mdl/material.js"></script>
 	<script src="lib/js/select2.min.js"></script>
 	<script src="lib/js/pt-BR.js"></script>
-	<script src="lib/funcoes.js"></script>
+	<script src="lib/js/funcoes.js"></script>
 	<title>ICS Contatos</title>
 </head>
 
@@ -84,12 +84,12 @@
 		<div class="mdl-layout__content">
 			<div id="homeMain">
 				<?php
-				include 'home/home.html';
+				include './app/view/home/home.html';
 				?>
 			</div>
 			<div id="cadastroMain">
 				<?php
-				include 'cadastro/cadastro.html'
+				include 'app/view/cadastro/cadastro.html'
 				?>
 			</div>
 			<div id="errosMain">
@@ -101,11 +101,12 @@
 	</div>
 
 </body>
-<script src="index.js"></script>
-<script src="login/login.js"></script>
-<script src="lib/funcoes.js"></script>
-<script src="cadastro/contatoModel.js"></script>
-<script src="cadastro/cadastro.js"></script>
-<script src="home/home.js"></script>
+<script src="app/view/index/index.js"></script>
+<script src="app/view/login/login.js"></script>
+<script src="lib/js/sincronizacao.js"></script>
+<script src="lib/js/funcoes.js"></script>
+<script src="app/view/cadastro/contatoModel.js"></script>
+<script src="app/view/cadastro/cadastro.js"></script>
+<script src="app/view/home/home.js"></script>
 
 </html>

@@ -2,48 +2,74 @@
 
 class Connection
 {
-    private $host;
-    private $dbNome;
-    private $usuario;
-    private $senha;
+    private $credenciais;
     private static $pdo;
+    private const ARQUIVO_CREDENCIAIS = '../cadastros/config/config.php';
 
-    function __construct()
+    public function getConnection()
     {
-        $arrConfig = require '../cadastros/config/config.php';
-        $this->host = $arrConfig['host'];
-        $this->dbNome = $arrConfig['db'];
-        $this->usuario = $arrConfig['user'];
-        $this->senha = $arrConfig['password'];
-    }
-
-    // fn getConnection
-    // fn lerCredenciaisDeAcesso
-    // fn verficarConexaoAberta
-    // fn conectar
-
-    
-
-
-
-    public function connect(): PDO
-    {
-        if (gettype(self::$pdo) === 'object' && get_class(self::$pdo) === 'PDO') {
-            return self::$pdo;
-        }
-
         try {
-            $dsn = "pgsql:host=" . $this->host . "; port=5432;dbname=" . $this->dbNome;
-            self::$pdo = new PDO($dsn, $this->usuario, $this->senha, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+            $this->verificarExistenciaDoArquivo();
+            $this->lerCredenciais();
+            $this->validarCredenciais();
 
-            if (!self::$pdo) {
-                throw new Exception("Erro de conexão.");
+            if ($this->verificarConexaoAberta() === false) {
+                $this->conectar();
             }
 
             return self::$pdo;
-        } catch (PDOException $e) {
-            echo 'Erro na conexão';
+        } catch (Exception $e) {
             die($e->getMessage());
         }
+    }
+
+    private function verificarExistenciaDoArquivo()
+    {
+        if (file_exists(self::ARQUIVO_CREDENCIAIS) === false) {
+            throw new Exception('Arquivo de credenciais não encontrado.');
+        }
+    }
+
+    private function lerCredenciais()
+    {
+        $this->credenciais = require self::ARQUIVO_CREDENCIAIS;
+    }
+
+    private function validarCredenciais()
+    {
+        if (gettype($this->credenciais) !== 'array') {
+            throw new Exception('O conteúdo do arquivo de credenciais é vazio ou invalido.');
+        }
+
+        if (isset($this->credenciais['host']) === false) {
+            throw new Exception('Credenciais invalidas: o indice "host" não foi encontrado');
+        }
+
+        if (isset($this->credenciais['nameDB']) === false) {
+            throw new Exception('Credenciais invalidas: o indice "nameDB" não foi encontrado');
+        }
+
+        if (isset($this->credenciais['user']) === false) {
+            throw new Exception('Credenciais invalidas: o indice "user" não foi encontrado');
+        }
+
+        if (isset($this->credenciais['password']) ===  false) {
+            throw new Exception('Credenciais invalidas: o indice "password" não foi encontrado.');
+        }
+    }
+
+    private function verificarConexaoAberta()
+    {
+        if (gettype(self::$pdo) === 'object' && get_class(self::$pdo) === 'PDO') {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function conectar()
+    {
+        $dsn = "pgsql:host=" . $this->credenciais['host'] . "; port=5432;dbname=" . $this->credenciais['nameDB'];
+        self::$pdo = new PDO($dsn, $this->credenciais['user'], $this->credenciais['password'], [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
     }
 }

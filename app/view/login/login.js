@@ -43,3 +43,7 @@ function erroLogin(mensagem) {
     dialog.close();
   });
 }
+
+function getErrosLogin(erro) {
+  console.log(erro)
+}

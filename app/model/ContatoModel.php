@@ -67,7 +67,7 @@ class ContatoModel extends Model
             $contato->observacao = 'NULL';
         }
 
-        $sql = "INSERT INTO contato (id_contato,email,nome,municipio,observacao,sexo,                       data_ultima_sincronizacao,data_insert,id_usuario_ultima_sincronizacao,id_usuario_insert)       
+        $sql = "INSERT INTO contato (id_contato,email,nome,municipio,observacao,sexo,data_ultima_sincronizacao,data_insert,id_usuario_ultima_sincronizacao,id_usuario_insert)       
                     VALUES ('$contato->codigoContato', '$contato->email', '$contato->nome', '$contato->municipio','$contato->observacao', '$contato->sexo', 'now()', '$contato->dataInsert', '$contato->id_usuario_ultima_sincronizacao', '$contato->idUsuarioInsert')";
 
         return $this->pdo->exec($sql);

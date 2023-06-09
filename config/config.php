@@ -2,7 +2,7 @@
 
 return  [
     'host' => 'localhost',
-    'db' => 'contatos',
+    'nameDB' => 'contatos',
     'user' => 'postgres',
     'password' => 'ramos321'
 ];

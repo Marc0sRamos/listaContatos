@@ -54,6 +54,7 @@ class ContatoModel {
             .then((contatos) => {
                 contatos.forEach(function (contato) {
 
+                    // a fazer: 
                     if (contato.status === 'excluido') {
                         let transaction = db.transaction(['contato'], 'readwrite')
                             .objectStore('contato')
@@ -178,6 +179,7 @@ class ContatoModel {
 
             validarObservacao(contato);
 
+            // a fazer: tamanho da linha ultrapassou o limite de 120
             var contatoDB = new Contato(contato.nome, contato.sexo, contato.telefone, contato.email, contato.municipio, contato.observacao, contato.id_contato, contato.id_usuario_insert, contato.data_insert, contato.status)
 
             let modelContato = new ContatoModel;

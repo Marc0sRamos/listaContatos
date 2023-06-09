@@ -2,11 +2,11 @@ var cidadesBanco = {}
 
 const rotas = {
 	"home": [
-		"/cadastros/home/home.html",
+		"app/view/home/home.html",
 	],
 
 	"cadastro": [
-		"/cadastros/cadastro/cadastro.html",
+		"app/view/cadastro/cadastro.html",
 	]
 };
 
@@ -52,11 +52,11 @@ function carregarPagina(argumentos) {
 		inconsistenciaMain.style.display = 'none';
 
 		let formulario = new Formulario();
-		limpar()
+		limparInput()
 		formulario.povoarSelectMunicipio();
 
 		if (typeof formulario[argumentos.callback] === 'function') {
-			limpar()
+			limparInput()
 			formulario.preencherFormulario(argumentos.id);
 		}
 
@@ -73,7 +73,7 @@ $(document).on('click', '#button-home--cadastro', function () {
 
 	let formulario = new Formulario();
 	formulario.povoarSelectMunicipio();
-	limpar()
+	limparInput()
 })
 
 $(document).on('click', '#button-cadastro--home', function () {

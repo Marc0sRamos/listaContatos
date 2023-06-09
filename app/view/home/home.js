@@ -11,21 +11,46 @@ class Home {
 
     povoarGrid(contatos) {
         document.getElementById('listaContatos').innerHTML = ''
+
         return new Promise((resolve, reject) => {
 
             contatos.forEach(function (contato, indice) {
+                
                 var li = document.createElement('li');
                 li.setAttribute('class', 'liHome');
                 li.setAttribute('id-contato', contato.codigoContato);
+
                 var div = document.createElement('div');
                 div.setAttribute('class', 'container-li');
+
+                // a fazer: verificar se "div2" está sendo utilizada
                 var div2 = document.createElement('class', 'container-li--contato')
 
+
+                // Elemento
+                //  - id
+                //  - class
+                //  - innerHTML
+                //  - backgrouColor
+
+                // Paragrafo extends Eleento
+            
+                // Li extends Elemento
+                //  - id-contato
+
+                // Div extends Elemento
+
+                // var paragrafo = new Paragrafo('inicial-nome', 'Joao', '#000fff');
+                // var p1 = paragrafo.criar();
+
+                // criarElementoP
                 var p1 = document.createElement('p');
                 p1.setAttribute('class', 'inicial-nome');
                 p1.innerHTML = contato.nome.substring(0, 1);
                 let cor = '#' + Math.floor(Math.random() * 0xFFFFFF).toString(16);;
                 p1.style.backgroundColor = cor;
+
+                
 
                 var p2 = document.createElement('p');
                 p2.setAttribute('class', 'mnc-ctt-nome');
@@ -79,5 +104,16 @@ class Home {
             .then((contatos) => { return this.povoarGrid(contatos); })
             .then(() => { console.log('grid carregada com sucesso.') });
     }
+}
+
+function carregarPaginaHome() {
+    if (typeof db !== 'object') {
+        setTimeout("carregarPaginaHome()", 50);
+        return;
+    }
+    carregarPagina({
+        'rota': 'home',
+        'callback': 'listarContatos'
+    });
 }
 
