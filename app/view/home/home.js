@@ -7,6 +7,10 @@ $(document).ready(function () {
 
 let arrCores = ['#008000', '#0000FF', '#F4A460', '#4B0082', '#FF4500', '#4682B4', '#48D1CC', '#8B008B', '#FF4500', '#FFD700', '#B22222'];
 
+class Elemento {
+    
+}
+
 class Home {
 
     povoarGrid(contatos) {
@@ -24,7 +28,7 @@ class Home {
                 div.setAttribute('class', 'container-li');
 
                 // a fazer: verificar se "div2" está sendo utilizada
-                var div2 = document.createElement('class', 'container-li--contato')
+                // var div2 = document.createElement('class', 'container-li--contato')
 
 
                 // Elemento
