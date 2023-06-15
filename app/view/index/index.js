@@ -10,13 +10,14 @@ const rotas = {
 	]
 };
 
-
 $(document).ready(function () {
 	getMunicipiosAjax()
 		.then((cidades) => {
 			cidadesBanco = cidades
 			carregarPaginaHome()
 		})
+	carregarInconsistencias(false)
+
 });
 
 $("body").on('click', '.navegacao', function () {
@@ -29,66 +30,21 @@ $("body").on('click', '.navegacao', function () {
 
 function carregarPagina(argumentos) {
 	$('.telefone').mask('(99) 99999-999?9');
+
 	if (argumentos.rota === 'home') {
-		var homeMain = document.getElementById("homeMain");
-		homeMain.style.display = 'flex';
-		var cadastroMain = document.getElementById('cadastroMain');
-		cadastroMain.style.display = 'none';
-		var inconsistenciaMain = document.getElementById('errosMain');
-		inconsistenciaMain.style.display = 'none';
-
-		let home = new Home();
-
-		if (typeof home[argumentos.callback] === 'function') {
-			home.listarContatos();
-		}
+		exibirPaginaHome(argumentos);
 	}
 	else if (argumentos.rota === 'cadastro') {
-		var cadastroMain = document.getElementById("cadastroMain");
-		cadastroMain.style.display = 'flex';
-		var homeMain = document.getElementById("homeMain");
-		homeMain.style.display = 'none';
-		var inconsistenciaMain = document.getElementById('errosMain');
-		inconsistenciaMain.style.display = 'none';
-
-		let formulario = new Formulario();
-		limparInput()
-		formulario.povoarSelectMunicipio();
-
-		if (typeof formulario[argumentos.callback] === 'function') {
-			limparInput()
-			formulario.preencherFormulario(argumentos.id);
-		}
-
+		exibirPaginaCadastro(argumentos)
 	}
 }
 
 $(document).on('click', '#button-home--cadastro', function () {
-	var cadastroMain = document.getElementById("cadastroMain");
-	cadastroMain.style.display = 'flex';
-	var homeMain = document.getElementById("homeMain");
-	homeMain.style.display = 'none';
-	var inconsistenciaMain = document.getElementById('errosMain');
-	inconsistenciaMain.style.display = 'none';
-
-	let formulario = new Formulario();
-	formulario.povoarSelectMunicipio();
-	limparInput()
+	exibirPaginaCadastro()
 })
 
 $(document).on('click', '#button-cadastro--home', function () {
-	var homeMain = document.getElementById("homeMain");
-	homeMain.style.display = 'flex';
-	var cadastroMain = document.getElementById('cadastroMain');
-	cadastroMain.style.display = 'none';
-	var inconsistenciaMain = document.getElementById('errosMain');
-	inconsistenciaMain.style.display = 'none';
-
-	let home = new Home();
-
-	if (typeof home[argumentos.callback] === 'function') {
-		home.listarContatos();
-	}
+	exibirPaginaHome()
 })
 
 $(document).on('click', '#button-erros', function () {
@@ -106,8 +62,6 @@ $(document).on('click', '#btn-sincronizar', function () {
 	salvarContatosDB()
 })
 
-carregarInconsistencias(false)
-
 function carregarInconsistencias(erros) {
 	if (erros === false) {
 		var inconsistenciaMain = document.getElementById('button-erros');
@@ -118,7 +72,30 @@ function carregarInconsistencias(erros) {
 	}
 }
 
+function exibirPaginaHome(argumentos) {
+	definirDisplay('none', 'flex', 'none')
 
+	if (typeof new Home()[argumentos.callback] === 'function') {
+		new Home().listarContatos();
+	}
+}
 
+function exibirPaginaCadastro(argumentos) {
+	definirDisplay('flex', 'none', 'none');
+
+	let formulario = new Formulario();
+	formulario.povoarSelectMunicipio();
+	limparInput()
+
+	if (typeof formulario[argumentos.callback] === 'function') {
+		formulario.preencherFormulario(argumentos.id);
+	}
+}
+
+function definirDisplay(displayCadastro, displayHome, displayErros) {
+	document.getElementById("cadastroMain").style.display = displayCadastro;
+	document.getElementById("homeMain").style.display = displayHome;
+	document.getElementById("errosMain").style.display = displayErros;
+}
 
 

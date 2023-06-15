@@ -1,5 +1,5 @@
 var db;
-var request = window.indexedDB.open("DBcontato", 2);
+var request = window.indexedDB.open("DBcontato", 3);
 
 request.onerror = function (event) {
     console.log("Não foi possivel conectar na base de dados!");
@@ -11,6 +11,7 @@ request.onupgradeneeded = function (event) {
     contatoObjectStore.createIndex('email', 'email', { unique: true });
     contatoObjectStore.createIndex('codigoContato', 'codigoContato', { unique: true });
     contatoObjectStore.createIndex('status', 'status', { unique: false });
+    contatoObjectStore.createIndex('telefone', 'telefone', { unique: false })
 }
 
 request.onsuccess = function (event) {
@@ -54,7 +55,6 @@ class ContatoModel {
             .then((contatos) => {
                 contatos.forEach(function (contato) {
 
-                    // a fazer: 
                     if (contato.status === 'excluido') {
                         let transaction = db.transaction(['contato'], 'readwrite')
                             .objectStore('contato')
@@ -115,27 +115,39 @@ class ContatoModel {
     }
 
     validarObjetoContato(contato) {
-        if (typeof contato !== 'object') {
-            return false;
-        }
+        try {
+            if (typeof contato !== 'object') {
+                throw 'Objeto invalido'
+            }
 
-        if (contato.nome === '') {
-            console.log('nome invalido')
+            if (contato.nome === '') {
+                throw 'Nome invalido'
+            }
+
+            if (contato.sexo != 'F' && contato.sexo != 'M') {
+                throw 'Sexo invalido'
+            }
+    
+            if(contato.telefone.length <= 0) {
+                throw 'Telefone invalido'
+            }
+    
+    
+            var atributos = ['nome', 'telefone', 'email', 'municipio', 'sexo'];
+    
+            return atributos.every((atributo) => {
+                return contato.hasOwnProperty(atributo);
+            });
+
+        } catch (mensagem) {
+            console.log(mensagem)
             return false
         }
-
-        if (contato.sexo != 'F' && contato.sexo != 'M') {
-            console.log('sexo invalido')
-            return false
-        }
-
-
-        var atributos = ['nome', 'telefone', 'email', 'municipio', 'sexo'];
-
-        return atributos.every((atributo) => {
-            return contato.hasOwnProperty(atributo);
-        });
+       
     }
+       
+
+       
 
     atualizar(contato) {
         let erroInfo = { 'error': false, 'message': '' }
@@ -179,8 +191,17 @@ class ContatoModel {
 
             validarObservacao(contato);
 
-            // a fazer: tamanho da linha ultrapassou o limite de 120
-            var contatoDB = new Contato(contato.nome, contato.sexo, contato.telefone, contato.email, contato.municipio, contato.observacao, contato.id_contato, contato.id_usuario_insert, contato.data_insert, contato.status)
+            var contatoDB = new Contato(
+                                contato.nome, 
+                                contato.sexo, 
+                                contato.telefone, 
+                                contato.email, 
+                                contato.municipio, 
+                                contato.observacao, 
+                                contato.id_contato, 
+                                contato.id_usuario_insert, 
+                                contato.data_insert, 
+                                contato.status)
 
             let modelContato = new ContatoModel;
             modelContato.adicionar(contatoDB);

@@ -80,18 +80,25 @@ class Formulario {
     };
 
     salvar() {
-        this.hidratar();
-        let filtrarContato = new contatoFilter;
-        filtrarContato.filtrar(this.contato);
-        let validarContato = new contatoValidacao;
-        validarContato.validar(this.contato);
+        try {
+            this.hidratar();
+            let filtrarContato = new contatoFilter;
+            filtrarContato.filtrar(this.contato);
+            let validarContato = new contatoValidacao;
+            validarContato.validar(this.contato);
 
-        if (document.getElementById('id-contato').value.length === 36) {
-            this.atualizar(this.contato)
-        } else {
-            this.inserir(this.contato)
+            if (document.getElementById('id-contato').value.length === 36) {
+                this.atualizar(this.contato)
+            } else {
+                this.inserir(this.contato)
+            }
+
+        } catch (mensagem) {
+            console.log(mensagem)
+            exibirMensagemDeErro(mensagem);
+            return false;
         }
-    };
+    }
 
     excluir(idContato, status) {
         if (status !== 'ativo') {
@@ -270,35 +277,27 @@ class contatoValidacao {
     }
 
     validar(contato) {
-        try {
-
-            if (this.validarNomeCidadao(contato.nome) === false) {
-                throw 'O nome do contato é inválido';
-            }
-
-            if (this.validarSexo(contato.sexo) === false) {
-                throw 'O sexo é invalido'
-            }
-
-            const THIS = this;
-
-            contato.telefone.forEach(function (value, indice) {
-                if (THIS.validarTelefone(value) === false) {
-                    throw 'O telefone ' + value + ' é invalido';
-                };
-            });
-
-            if (this.validarEmail(contato.email) === false) {
-                throw 'O endereço de email é inválido';
-            }
-
-            return true;
-
-        } catch (mensagem) {
-            console.log(mensagem)
-            exibirMensagemDeErro(mensagem);
-            return false;
+        if (this.validarNomeCidadao(contato.nome) === false) {
+            throw 'O nome do contato é inválido';
         }
+
+        if (this.validarSexo(contato.sexo) === false) {
+            throw 'O sexo é invalido'
+        }
+
+        const THIS = this;
+
+        contato.telefone.forEach(function (value, indice) {
+            if (THIS.validarTelefone(value) === false) {
+                throw 'O telefone ' + value + ' é invalido';
+            };
+        });
+
+        if (this.validarEmail(contato.email) === false) {
+            throw 'O endereço de email é inválido';
+        }
+
+        return true;
     };
 }
 
